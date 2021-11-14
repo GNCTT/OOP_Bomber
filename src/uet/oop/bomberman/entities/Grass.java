@@ -18,4 +18,9 @@ public class Grass extends Entity {
     @Override
     public void update() {
     }
+
+    @Override
+    public void move(double px, double py) {
+
+    }
 }

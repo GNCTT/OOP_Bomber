@@ -44,6 +44,11 @@ public class Enemy1 extends Entity{
 
     }
 
+    @Override
+    public void move(double px, double py) {
+
+    }
+
 
     public void calDirection () {
         if (direction < 200) {

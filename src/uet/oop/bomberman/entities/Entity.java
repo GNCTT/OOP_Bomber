@@ -25,4 +25,12 @@ public abstract class Entity {
 
     public abstract void render(GraphicsContext gc);
     public abstract void update();
+    public abstract void move(double px, double py);
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
 }

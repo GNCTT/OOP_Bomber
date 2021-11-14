@@ -18,4 +18,9 @@ public class Wall extends Entity {
     @Override
     public void update() {
     }
+
+    @Override
+    public void move(double px, double py) {
+
+    }
 }
