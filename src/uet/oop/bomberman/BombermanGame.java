@@ -8,10 +8,14 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import uet.oop.bomberman.Map.Map;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.*;
+import uet.oop.bomberman.entities.Character.Balloon;
+import uet.oop.bomberman.entities.Character.Bomber;
+import uet.oop.bomberman.entities.Character.Oneal;
+import uet.oop.bomberman.entities.Tiles.Brick;
+import uet.oop.bomberman.entities.Tiles.Grass;
+import uet.oop.bomberman.entities.Tiles.Portal;
+import uet.oop.bomberman.entities.Tiles.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
@@ -82,7 +86,7 @@ public class BombermanGame extends Application {
     }
 
     public void createMap() {
-        Map map = new Map(1);
+        Map map = new Map(2);
         map.createMap();
         String [] lineTiles = map.get_lineTiles();
         WIDTH = map.getWidth();
@@ -95,17 +99,53 @@ public class BombermanGame extends Application {
             for (int j = 0; j < WIDTH; ++j) {
                 count ++;
                 Entity object;
-                if (lineTiles[i].charAt(j) == '#') {
-                    object = new Wall(j, i, Sprite.wall.getFxImage());
-                } else {
-                    object = new Grass(j, i, Sprite.grass.getFxImage());
+                switch (lineTiles[i].charAt(j)) {
+                    case '#':
+                        object = new Wall(j, i, Sprite.wall.getFxImage());
+                        break;
+
+                    case 'x':
+                        object = new Portal(j, i, Sprite.portal.getFxImage());
+                        Entity object2 = new Brick(j, i, Sprite.brick.getFxImage());
+                        stillObjects.add(object2);
+                        break;
+                    case '*':
+                        object = new Brick(j, i, Sprite.brick.getFxImage());
+                        break;
+                    default:
+                        object = new Grass(j, i, Sprite.grass.getFxImage());
+                        break;
                 }
+
                 stillObjects.add(object);
             }
         }
-        System.out.println(count);
+
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; ++j) {
+                count ++;
+                switch (lineTiles[i].charAt(j)) {
+//                    case '#':
+//                        object = new Wall(j, i, Sprite.wall.getFxImage());
+//                        break;
+//                    case '*':
+//                        object = new Brick(j, i, Sprite.brick.getFxImage());
+//                        break;
+                    case '1':
+                        Entity object2 = new Balloon(j, i, Sprite.balloom_left1.getFxImage());
+                        entities.add(object2);
+                        break;
+                    case '2':
+                        entities.add(new Oneal(j, i, Sprite.oneal_right1.getFxImage()));
+                }
+
+            }
+        }
+
 
     }
+
+
 
     public void update() {
         entities.forEach(Entity::update);
