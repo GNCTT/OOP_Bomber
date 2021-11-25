@@ -5,56 +5,52 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends Entity {
-    private int animate;
-    private int direction;
+    private int animate = 0;
+    private int maxAnimate = 7500;
+    private int speed;
 
-    public Bomber(int x, int y, Sprite sprite) {
-        super( x, y, sprite);
-        animate = 0;
-    }
-
-    @Override
-    public void render(GraphicsContext gc) {
-        if (direction == 0) {
-            sprite = Sprite.movingSprite(Sprite.player_up_2, Sprite.player_up_1, Sprite.player_up, animate, 60);
-        }
-        if (direction == 1) sprite = Sprite.movingSprite(Sprite.player_right_1, Sprite.player_right_2, Sprite.player_right, animate, 60);
-        if (direction == 2) sprite = Sprite.movingSprite(Sprite.player_down_1, Sprite.player_down_2, Sprite.player_down, animate, 60);
-        if (direction == 3) sprite = Sprite.movingSprite(Sprite.player_left_1, Sprite.player_left_2, Sprite.player_left, animate, 60);
-        gc.drawImage(sprite.getFxImage(), x, y);
+    public Bomber(int x, int y, Image img) {
+        super( x, y, img);
+        speed = 2;
     }
 
     @Override
     public void update() {
-        if (animate < 7500) {
+        if (animate < maxAnimate) {
             animate ++;
-        }
-        else {
+        } else {
             animate = 0;
         }
+        move();
+
     }
 
+    public void move() {
 
+        if (BombermanGame.up) {
+            y -= 1 * speed;
+            Sprite a = Sprite.movingSprite(Sprite.player_up_1, Sprite.player_up_2, animate, 20);
+            img = a.getFxImage();
+        }
+        if (BombermanGame.down) {
+            y += 1 * speed;
+            Sprite a = Sprite.movingSprite(Sprite.player_down_1, Sprite.player_down_2, animate, 20);
+            img = a.getFxImage();
+        }
+        if (BombermanGame.left) {
+            x-= 1 * speed;
+            Sprite a = Sprite.movingSprite(Sprite.player_left_1, Sprite.player_left_2, animate, 20);
+            img = a.getFxImage();
+        }
+        if (BombermanGame.right) {
+            x+= 1* speed;
+            Sprite a = Sprite.movingSprite(Sprite.player_right_1, Sprite.player_right_2, animate, 20);
+            img = a.getFxImage();
+        }
 
-    public void move(double px, double py) {
-
-        x += px;
-        y += py;
-    }
-
-    public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
-    }
-
-    @Override
-    public Sprite getSprite() {
-        return super.getSprite();
-    }
-
-    public void setDirection(int direction) {
-        this.direction = direction;
     }
 }

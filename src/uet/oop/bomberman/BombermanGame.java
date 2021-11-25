@@ -7,24 +7,26 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
-import uet.oop.bomberman.Input.Keyhandle;
-import uet.oop.bomberman.entities.*;
+import uet.oop.bomberman.Map.Map;
+import uet.oop.bomberman.entities.Bomber;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.Grass;
+import uet.oop.bomberman.entities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BombermanGame extends Application {
-    
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
-    
+
+    public static int WIDTH = 20;
+    public static int HEIGHT = 15;
+
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
-    boolean goNorth, goSouth, goWest, goEast, placeBomb;
+    public static boolean up, down, right, left;
 
 
     public static void main(String[] args) {
@@ -34,7 +36,7 @@ public class BombermanGame extends Application {
     @Override
     public void start(Stage stage) {
         // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH * 1.6, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
         // Tao root container
@@ -46,89 +48,67 @@ public class BombermanGame extends Application {
 
         // Them scene vao stage
         stage.setScene(scene);
-        scene.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-                case UP:    goNorth = true; break;
-                case DOWN:  goSouth = true; break;
-                case LEFT:  goWest  = true; break;
-                case RIGHT: goEast  = true; break;
-                case SHIFT: placeBomb = true; break;
-            }
-        });
-        scene.setOnKeyReleased(event -> {
-            switch (event.getCode()) {
-                case UP:    goNorth = false; break;
-                case DOWN:  goSouth = false; break;
-                case LEFT:  goWest  = false; break;
-                case RIGHT: goEast  = false; break;
-                case SHIFT: placeBomb = false; break;
-            }
-        });
-
         stage.show();
-        Bomber bomberman = new Bomber(1, 1, Sprite.player_right);
+
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                int dx = 0, dy = 0;
-                int dir = -1;
-                render();
-                input();
-                if (goNorth) {
-                    dy -= 1;
-                    dir = 0;
-                }
-                if (goSouth) {
-                    dy += 1;
-                    dir = 2;
-                }
-                if (goEast)  {
-                    dx += 1;
-                    dir = 1;
-                }
-                if (goWest)  {
-                    dx -= 1;
-                    dir = 3;
-                }
-                bomberman.setDirection(dir);
-                bomberman.move(dx * 3, dy * 3);
+                scene.setOnKeyPressed(event -> {
+                    switch (event.getCode()) {
+                        case UP:    up = true; break;
+                        case DOWN:  down = true; break;
+                        case LEFT:  left  = true; break;
+                        case RIGHT: right  = true; break;
+                    }
+                });
+                scene.setOnKeyReleased(event -> {
+                    switch (event.getCode()) {
+                        case UP:    up = false; break;
+                        case DOWN:  down = false; break;
+                        case LEFT:  left  = false; break;
+                        case RIGHT: right  = false; break;
+                    }
+                });
                 update();
+                render();
             }
         };
         timer.start();
 
         createMap();
 
-        Wall wall = new Wall(2, 2, Sprite.wall);
-        Enemy1 enemy1 = new Enemy1(10, 3, Sprite.mob_dead2);
-        Entity wall2 = new Wall( 1, 10, Sprite.wall);
+        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
-        entities.add(wall);
-        entities.add(wall2);
-        entities.add(enemy1);
     }
 
     public void createMap() {
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
+        Map map = new Map(1);
+        map.createMap();
+        String [] lineTiles = map.get_lineTiles();
+        WIDTH = map.getWidth();
+        HEIGHT = map.getHeight();
+        System.out.println(WIDTH + " : " + HEIGHT);
+        System.out.println(lineTiles[1]);
+        int count = 0;
+
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; ++j) {
+                count ++;
                 Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
-                    object = new Wall(i, j, Sprite.wall);
-                }
-                else {
-                    object = new Grass(i, j, Sprite.grass);
+                if (lineTiles[i].charAt(j) == '#') {
+                    object = new Wall(j, i, Sprite.wall.getFxImage());
+                } else {
+                    object = new Grass(j, i, Sprite.grass.getFxImage());
                 }
                 stillObjects.add(object);
             }
         }
+        System.out.println(count);
+
     }
 
     public void update() {
         entities.forEach(Entity::update);
-    }
-
-    public void input() {
-
     }
 
     public void render() {
