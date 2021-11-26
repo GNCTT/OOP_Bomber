@@ -12,6 +12,7 @@ import uet.oop.bomberman.graphics.Sprite;
 public class Bomber extends Entity {
     private int animate = 0;
     private int maxAnimate = 7500;
+    private int direction;
     private int speed;
 
     public Bomber(int x, int y, Image img) {
@@ -26,32 +27,74 @@ public class Bomber extends Entity {
         } else {
             animate = 0;
         }
-        move();
+        input();
 
     }
 
-    public void move() {
-
+    private void input() {
+        int dx = 0, dy = 0;
         if (BombermanGame.up) {
-            y -= 1 * speed;
-            Sprite a = Sprite.movingSprite(Sprite.player_up_1, Sprite.player_up_2, animate, 20);
-            img = a.getFxImage();
+            dy -= 1 * speed;
         }
         if (BombermanGame.down) {
-            y += 1 * speed;
-            Sprite a = Sprite.movingSprite(Sprite.player_down_1, Sprite.player_down_2, animate, 20);
-            img = a.getFxImage();
+            dy = 1 * speed;
         }
         if (BombermanGame.left) {
-            x-= 1 * speed;
-            Sprite a = Sprite.movingSprite(Sprite.player_left_1, Sprite.player_left_2, animate, 20);
-            img = a.getFxImage();
+            dx = -1 * speed;
         }
         if (BombermanGame.right) {
-            x+= 1* speed;
-            Sprite a = Sprite.movingSprite(Sprite.player_right_1, Sprite.player_right_2, animate, 20);
-            img = a.getFxImage();
+            dx = 1* speed;
+        }
+        move(dx, dy);
+
+//        if (!BombermanGame.up && !BombermanGame.down && !BombermanGame.right && !BombermanGame.left) {
+//            move(0, 0);
+//        }
+    }
+
+    public void move(int dx, int dy) {
+        direction = -1;
+        if (dx == 0 && dy < 0) {
+            direction = 0;
+        }
+        if (dx== 0 && dy > 0) {
+            direction = 2;
+        }
+        if (dx > 0 && dy == 0) {
+            direction = 1;
+        }
+        if (dx < 0 && dy == 0) {
+            direction = 3;
+        }
+        if (dx == 0 && dy == 0) {
+            direction = -1;
+        }
+
+        x += dx;
+        y += dy;
+
+        switch (direction) {
+            case 0:
+                img = Sprite.movingSprite(Sprite.player_up_1, Sprite.player_up_2, animate, 20).getFxImage();
+                break;
+            case 1:
+                img = Sprite.movingSprite(Sprite.player_right_1, Sprite.player_right_2, animate, 20).getFxImage();
+                break;
+            case 2:
+                img = Sprite.movingSprite(Sprite.player_down_1, Sprite.player_down_2, animate, 20).getFxImage();
+                break;
+            case 3:
+                img = Sprite.movingSprite(Sprite.player_left_1, Sprite.player_left_2, animate, 20).getFxImage();
+                break;
+            default:
+                img = Sprite.player_down.getFxImage();
+                break;
         }
 
     }
+
+    private void canMove() {
+
+    }
+
 }
