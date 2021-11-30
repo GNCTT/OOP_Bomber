@@ -14,4 +14,9 @@ public class SpeedItem extends Entity {
 
     }
 
+    @Override
+    public boolean collide(Entity a) {
+        return false;
+    }
+
 }
