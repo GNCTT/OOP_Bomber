@@ -47,9 +47,6 @@ public class Bomber extends Entity {
         }
         move(dx, dy);
 
-//        if (!BombermanGame.up && !BombermanGame.down && !BombermanGame.right && !BombermanGame.left) {
-//            move(0, 0);
-//        }
     }
 
     public void move(int dx, int dy) {
@@ -72,6 +69,7 @@ public class Bomber extends Entity {
 
         x += dx;
         y += dy;
+
 
         switch (direction) {
             case 0:
