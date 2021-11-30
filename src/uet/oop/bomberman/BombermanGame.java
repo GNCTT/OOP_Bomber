@@ -33,7 +33,7 @@ public class BombermanGame extends Application {
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
 
-    public static boolean up, down, right, left;
+    public static boolean up, down, right, left, space;
     public static Map map;
 
 
@@ -43,8 +43,13 @@ public class BombermanGame extends Application {
 
     @Override
     public void start(Stage stage) {
+        map = new Map(3);
+        map.createMap();
+        System.out.println(map.getHeight() +" " + HEIGHT);
+        HEIGHT = map.getHeight();
+        WIDTH = map.getWidth();
         // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH * 1.6, Sprite.SCALED_SIZE * HEIGHT);
+        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
         // Tao root container
@@ -67,6 +72,7 @@ public class BombermanGame extends Application {
                         case DOWN:  down = true; break;
                         case LEFT:  left  = true; break;
                         case RIGHT: right  = true; break;
+                        case SPACE: space = true; break;
                     }
                 });
                 scene.setOnKeyReleased(event -> {
@@ -75,65 +81,24 @@ public class BombermanGame extends Application {
                         case DOWN:  down = false; break;
                         case LEFT:  left  = false; break;
                         case RIGHT: right  = false; break;
+                        case SPACE: space = false; break;
                     }
                 });
                 update();
                 render();
+
             }
         };
         timer.start();
 
         createMap();
-
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-        entities.add(bomberman);
     }
 
     public void createMap() {
-        map = new Map(3);
-        map.createMap();
-        String [] lineTiles = map.get_lineTiles();
         WIDTH = map.getWidth();
         HEIGHT = map.getHeight();
-
-        for (int i = 0; i < HEIGHT; i++) {
-            for (int j = 0; j < WIDTH; ++j) {
-                switch (lineTiles[i].charAt(j)) {
-                    case '#':
-                        stillObjects.add(new Wall(j, i, Sprite.wall.getFxImage()));
-                        break;
-
-                    case 'x':
-                        stillObjects.add(new Portal(j, i, Sprite.portal.getFxImage()));
-                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
-                        break;
-                    case '*':
-                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
-                        break;
-                    case 's':
-                        stillObjects.add(new SpeedItem(j, i, Sprite.powerup_speed.getFxImage()));
-                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
-                        break;
-                    default:
-                        stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
-                        break;
-                }
-            }
-        }
-
-        for (int i = 0; i < HEIGHT; i++) {
-            for (int j = 0; j < WIDTH; ++j) {
-                switch (lineTiles[i].charAt(j)) {
-                    case '1':
-                        entities.add(new Balloon(j, i, Sprite.balloom_left1.getFxImage()));
-                        break;
-                    case '2':
-                        entities.add(new Oneal(j, i, Sprite.oneal_right1.getFxImage()));
-                        break;
-                }
-
-            }
-        }
+        stillObjects = map.getStillObjects();
+        entities = map.getEntities();
 
 
     }
@@ -141,12 +106,11 @@ public class BombermanGame extends Application {
 
 
     public void update() {
-        entities.forEach(Entity::update);
+        map.update();
     }
 
     public void render() {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        stillObjects.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
+
+        map.render(gc, canvas);
     }
 }

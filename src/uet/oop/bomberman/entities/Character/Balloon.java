@@ -14,4 +14,12 @@ public class Balloon extends Entity {
 
     }
 
+    @Override
+    public boolean collide(Entity a) {
+        if (a instanceof Bomber) {
+            return true;
+        }
+        return false;
+    }
+
 }
