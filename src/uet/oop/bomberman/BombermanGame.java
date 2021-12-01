@@ -28,6 +28,7 @@ public class BombermanGame extends Application {
     public static int WIDTH = 20;
     public static int HEIGHT = 15;
 
+
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
@@ -43,7 +44,7 @@ public class BombermanGame extends Application {
 
     @Override
     public void start(Stage stage) {
-        map = new Map(3);
+        System.out.println("hellhello        map = new Map(3);
         map.createMap();
         System.out.println(map.getHeight() +" " + HEIGHT);
         HEIGHT = map.getHeight();
