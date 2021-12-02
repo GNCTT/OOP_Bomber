@@ -1,17 +1,19 @@
 package uet.oop.bomberman.entities.Character;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
-public class Oneal extends Entity {
+
+public class Kondoria extends Entity {
     private int animate = 0;
     private int maxAnimate = 7500;
     private int direction;
     private int speed;
     private int index = 0;
 
-    public Oneal(int x, int y, Image img) {
+    public Kondoria(int x, int y, Image img) {
         super(x, y, img);
         speed = 1;
     }
@@ -56,30 +58,22 @@ public class Oneal extends Entity {
 
         switch (direction) {
             case 0:
-                img = Sprite.movingSprite(Sprite.oneal_right1, Sprite.oneal_right2, animate, 20).getFxImage();
+                img = Sprite.movingSprite(Sprite.kondoria_right1, Sprite.kondoria_right2, animate, 20).getFxImage();
                 break;
             case 1:
-                img = Sprite.movingSprite(Sprite.oneal_right2, Sprite.oneal_right3, animate, 20).getFxImage();
+                img = Sprite.movingSprite(Sprite.kondoria_right2, Sprite.kondoria_right3, animate, 20).getFxImage();
                 break;
             case 2:
-                img = Sprite.movingSprite(Sprite.oneal_left1, Sprite.oneal_left2, animate, 20).getFxImage();
+                img = Sprite.movingSprite(Sprite.kondoria_left1, Sprite.kondoria_left2, animate, 20).getFxImage();
                 break;
             case 3:
-                img = Sprite.movingSprite(Sprite.oneal_left2, Sprite.oneal_left3, animate, 20).getFxImage();
+                img = Sprite.movingSprite(Sprite.kondoria_left2, Sprite.kondoria_left3, animate, 20).getFxImage();
                 break;
             default:
-                img = Sprite.oneal_dead.getFxImage();
+                img = Sprite.kondoria_dead.getFxImage();
                 break;
         }
 
-    }
-
-    @Override
-    public boolean collide(Entity a) {
-        if (a instanceof Bomber) {
-            return true;
-        }
-        return false;
     }
 
 }
