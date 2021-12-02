@@ -36,7 +36,6 @@ public class Bomber extends Entity {
         if (timeBomb < -7500) timeBomb = 0;
         else timeBomb --;
         input();
-
     }
 
     @Override
