@@ -81,9 +81,6 @@ public class Map {
                         stillObjects.add(new Portal(j, i, Sprite.portal.getFxImage()));
                         stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
-                    case '*':
-                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
-                        break;
                     case 's':
                         stillObjects.add(new SpeedItem(j, i, Sprite.powerup_speed.getFxImage()));
                         stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
@@ -104,6 +101,9 @@ public class Map {
                     case '2':
                         entities.add(new Oneal(j, i, Sprite.oneal_right1.getFxImage()));
 //                        entities.add(new Bomb(j, i, Sprite.bomb.getFxImage()));
+                        break;
+                    case '*':
+                        entities.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
                     case 'p':
                         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
@@ -132,6 +132,9 @@ public class Map {
 
     public void removeEntity(Entity a) {
         entities.remove(a);
+    }
+    public void removeObject(Entity a) {
+        stillObjects.remove(a);
     }
 
     public void addObject(Entity a) {
@@ -164,6 +167,12 @@ public class Map {
         return null;
     }
 
+    public void addAllEntities(ArrayList<Entity> entities) {
+        for (int i = 0; i < entities.size(); i++) {
+            this.entities.add(entities.get(i));
+        }
+    }
+
     public int getHeight() {
         return height;
     }
@@ -173,17 +182,29 @@ public class Map {
     }
 
     public void update() {
+        for (int i = 0; i < stillObjects.size(); i++) {
+            stillObjects.get(i).update();
+        }
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).update();
         }
     }
 
+    public void update2() {
+        for (int i = 0; i < stillObjects.size(); i++) {
+            stillObjects.get(i).update();
+        }
+    }
+
     public void render(GraphicsContext gc, Canvas canvas) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        stillObjects.forEach(g -> g.render(gc));
+        for (int i = 0; i < stillObjects.size(); i++) {
+            stillObjects.get(i).render(gc);
+        }
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).render(gc);
         }
+
     }
 
 
