@@ -11,7 +11,7 @@ import java.nio.IntBuffer;
 public class Sprite {
 	
 	public static final int DEFAULT_SIZE = 16;
-	public static final int SCALED_SIZE = DEFAULT_SIZE * 2;
+	public static final int SCALED_SIZE = DEFAULT_SIZE * 4;
     private static final int TRANSPARENT_COLOR = 0xffff00ff;
 	public final int SIZE;
 	private int _x, _y;
@@ -115,7 +115,28 @@ public class Sprite {
 	public static Sprite kondoria_right3 = new Sprite(DEFAULT_SIZE, 11, 7, SpriteSheet.tiles, 16, 16);
 	
 	public static Sprite kondoria_dead = new Sprite(DEFAULT_SIZE, 10, 8, SpriteSheet.tiles, 16, 16);
-	
+
+	//Conma 6
+	public static Sprite conma_left1 = new Sprite(DEFAULT_SIZE, 6, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite conma_left2 = new Sprite(DEFAULT_SIZE, 6, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite conma_left3 = new Sprite(DEFAULT_SIZE, 6, 7, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite conma_right1 = new Sprite(DEFAULT_SIZE, 7, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite conma_right2 = new Sprite(DEFAULT_SIZE, 7, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite conma_right3 = new Sprite(DEFAULT_SIZE, 7, 7, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite conma_dead = new Sprite(DEFAULT_SIZE, 6, 8, SpriteSheet.tiles, 16, 16);
+
+	//Conlon 7
+	public static Sprite conlon_left1 = new Sprite(DEFAULT_SIZE, 4, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite conlon_left2 = new Sprite(DEFAULT_SIZE, 4, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite conlon_left3 = new Sprite(DEFAULT_SIZE, 4, 7, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite conlon_right1 = new Sprite(DEFAULT_SIZE, 5, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite conlon_right2 = new Sprite(DEFAULT_SIZE, 5, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite conlon_right3 = new Sprite(DEFAULT_SIZE, 5, 7, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite conlon_dead = new Sprite(DEFAULT_SIZE, 4, 8, SpriteSheet.tiles, 16, 16);
 	//ALL
 	public static Sprite mob_dead1 = new Sprite(DEFAULT_SIZE, 15, 0, SpriteSheet.tiles, 16, 16);
 	public static Sprite mob_dead2 = new Sprite(DEFAULT_SIZE, 15, 1, SpriteSheet.tiles, 16, 16);

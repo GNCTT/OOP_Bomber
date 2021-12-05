@@ -5,9 +5,9 @@ import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Character.Balloon;
 import uet.oop.bomberman.entities.Character.Bomber;
+import uet.oop.bomberman.entities.Character.Minvo;
 import uet.oop.bomberman.entities.Character.Oneal;
-import uet.oop.bomberman.entities.Enemy.Ballon2;
-import uet.oop.bomberman.entities.Enemy.Enemy;
+import uet.oop.bomberman.entities.Enemy.*;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Items.Bomb;
 import uet.oop.bomberman.entities.Items.SpeedItem;
@@ -108,8 +108,22 @@ public class Map {
                         entities.add(new Ballon2(j, i, Sprite.balloom_left1.getFxImage()));
                         break;
                     case '2':
-                        entities.add(new Oneal(j, i, Sprite.oneal_right1.getFxImage()));
-//                        entities.add(new Bomb(j, i, Sprite.bomb.getFxImage()));
+                        entities.add(new Oneal2(j, i, Sprite.oneal_right1.getFxImage()));
+                        break;
+                    case '3':
+                        entities.add(new Doll2(j, i, Sprite.doll_right1.getFxImage()));
+                        break;
+                    case '4':
+                        entities.add(new Kondoria2(j, i, Sprite.kondoria_right1.getFxImage()));
+                        break;
+                    case '5':
+                        entities.add(new Minvo2(j, i, Sprite.minvo_right1.getFxImage()));
+                        break;
+                    case '6':
+                        entities.add(new Conma2(j, i, Sprite.conma_right1.getFxImage()));
+                        break;
+                    case '7':
+                        entities.add(new Conlon2(j, i, Sprite.conlon_right1.getFxImage()));
                         break;
 //                    case '*':
 //                        entities.add(new Brick(j, i, Sprite.brick.getFxImage()));

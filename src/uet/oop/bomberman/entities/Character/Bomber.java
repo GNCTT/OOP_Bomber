@@ -138,6 +138,12 @@ public class Bomber extends Entity {
     }
 
 
+
+
+    public void setSpeed () {
+        this.speed = speed * 2;
+    }
+
     public boolean canMove(int _x, int _y) {
         int dx = x + _x;
         int dy = y + _y;
@@ -239,10 +245,4 @@ public class Bomber extends Entity {
         img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, animate, 20).getFxImage();
         alive = false;
     }
-
-    public void setSpeed () {
-        this.speed = speed * 2;
-    }
-
-
 }

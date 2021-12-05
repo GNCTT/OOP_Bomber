@@ -5,13 +5,13 @@ import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
-public class Ballon2 extends Enemy {
+public class Doll2 extends Enemy {
 
     private int speed;
     private int index;
 
 
-    public Ballon2(int x, int y, Image img) {
+    public Doll2(int x, int y, Image img) {
         super(x, y, img);
         index = 0;
     }
@@ -20,23 +20,19 @@ public class Ballon2 extends Enemy {
     public void chooseSprite() {
         switch (direction) {
             case 0:
-                img = Sprite.movingSprite(Sprite.balloom_right1, Sprite.balloom_right2, animate, 20).getFxImage();
-
+                img = Sprite.movingSprite(Sprite.doll_right1, Sprite.doll_right2, animate, 20).getFxImage();
                 break;
             case 1:
-                img = Sprite.movingSprite(Sprite.balloom_right2, Sprite.balloom_right3, animate, 20).getFxImage();
-
+                img = Sprite.movingSprite(Sprite.doll_right2, Sprite.doll_right3, animate, 20).getFxImage();
                 break;
             case 2:
-                img = Sprite.movingSprite(Sprite.balloom_left1, Sprite.balloom_left2, animate, 20).getFxImage();
-
+                img = Sprite.movingSprite(Sprite.doll_left1, Sprite.doll_left2, animate, 20).getFxImage();
                 break;
             case 3:
-                img = Sprite.movingSprite(Sprite.balloom_left2, Sprite.balloom_left3, animate, 20).getFxImage();
-
+                img = Sprite.movingSprite(Sprite.doll_left2, Sprite.doll_left3, animate, 20).getFxImage();
                 break;
             default:
-                img = Sprite.balloom_left1.getFxImage();
+                img = Sprite.doll_dead.getFxImage();
                 break;
         }
     }
