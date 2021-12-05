@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.Tiles;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.entities.Character.Balloon;
 import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Entity;
 
@@ -17,7 +18,7 @@ public class Brick extends Entity {
 
     @Override
     public boolean collide(Entity a) {
-        if (a instanceof Bomber) {
+        if (a instanceof Bomber || a instanceof Balloon) {
             return true;
         }
         return false;

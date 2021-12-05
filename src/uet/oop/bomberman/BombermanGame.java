@@ -43,7 +43,7 @@ public class BombermanGame extends Application {
 
     @Override
     public void start(Stage stage) {
-        map = new Map(3);
+        map = new Map(5);
         map.createMap();
         System.out.println(map.getHeight() +" " + HEIGHT);
         HEIGHT = map.getHeight();
@@ -66,6 +66,9 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
+
+                //vong lap cua game day
+                //input
                 scene.setOnKeyPressed(event -> {
                     switch (event.getCode()) {
                         case UP:    up = true; break;
@@ -84,7 +87,10 @@ public class BombermanGame extends Application {
                         case SPACE: space = false; break;
                     }
                 });
+                //de update nhan vat(toa do , hinh anh ...)
                 update();
+
+                // ve ra man hinh 
                 render();
 
             }

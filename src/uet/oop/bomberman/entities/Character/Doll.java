@@ -28,6 +28,11 @@ public class Doll extends Entity {
         move();
     }
 
+    @Override
+    public boolean collide(Entity a) {
+        return false;
+    }
+
 
     public void move() {
         int dx = 0, dy = 0;

@@ -3,9 +3,7 @@ package uet.oop.bomberman.Map;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Character.Balloon;
-import uet.oop.bomberman.entities.Character.Bomber;
-import uet.oop.bomberman.entities.Character.Oneal;
+import uet.oop.bomberman.entities.Character.*;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Items.Bomb;
 import uet.oop.bomberman.entities.Items.SpeedItem;
@@ -104,6 +102,15 @@ public class Map {
                     case '2':
                         entities.add(new Oneal(j, i, Sprite.oneal_right1.getFxImage()));
 //                        entities.add(new Bomb(j, i, Sprite.bomb.getFxImage()));
+                        break;
+                    case '3' :
+                        entities.add(new Doll(j, i, Sprite.doll_left1.getFxImage()));
+                        break;
+                    case '4':
+                        entities.add(new Kondoria(j, i, Sprite.kondoria_right1.getFxImage()));
+                        break;
+                    case '5' :
+                        entities.add(new Minvo(j, i, Sprite.minvo_right2.getFxImage()));
                         break;
                     case 'p':
                         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
