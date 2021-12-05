@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Items.Bomb;
+import uet.oop.bomberman.entities.Items.SpeedItem;
 import uet.oop.bomberman.entities.Tiles.Brick;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -19,11 +20,13 @@ public class Bomber extends Entity {
     private boolean moving;
     private boolean alive;
     private int timeBomb = 0;
+    private int timePower;
 
     public Bomber(int x, int y, Image img) {
         super( x, y, img);
         speed = Sprite.SCALED_SIZE / 16;
         alive = true;
+        timePower = 20;
     }
 
     @Override
@@ -36,7 +39,6 @@ public class Bomber extends Entity {
         if (timeBomb < -7500) timeBomb = 0;
         else timeBomb --;
         input();
-
     }
 
     @Override
@@ -66,8 +68,8 @@ public class Bomber extends Entity {
         if (BombermanGame.space && timeBomb < 0) {
 //            Entity a = new Bomber(x, y, Sprite.movingSprite(Sprite.bomb_1, Sprite.bomb_2, animate, 20).getFxImage());
             Bomb a = new Bomb(x, y, Sprite.bomb.getFxImage());
-            BombermanGame.map.addBomb(x, y);
-            timeBomb = 30;
+            BombermanGame.map.addBomb((int) (x + Sprite.SCALED_SIZE / 2),(int) (y + Sprite.SCALED_SIZE / 2));
+            timeBomb = 80;
         }
         move(dx, dy);
         chooseSprite(direction);
@@ -147,6 +149,45 @@ public class Bomber extends Entity {
         Entity o2 = BombermanGame.map.getObject(x1, y2);
         Entity o3 = BombermanGame.map.getObject(x2, y1);
         Entity o4 = BombermanGame.map.getObject(x2, y2);
+        Entity b1 = BombermanGame.map.getEntity(x1, y1);
+        Entity b2 = BombermanGame.map.getEntity(x1, y2);
+        Entity b3 = BombermanGame.map.getEntity(x2, y1);
+        Entity b4 = BombermanGame.map.getEntity(x2, y2);
+        if (b1 != null) {
+            if (b1.collide(this)) {
+                return false;
+            }
+        }
+        if (b2 != null) {
+            if (b2.collide(this)) {
+                return false;
+            }
+        }
+        if (b3 != null) {
+            if (b3.collide(this)) {
+                return false;
+            }
+        }
+        if (b4 != null) {
+            if (b4.collide(this)) {
+                return false;
+            }
+        }
+
+        if (o4 instanceof SpeedItem) {
+            speed = Sprite.SCALED_SIZE / 8;
+        }
+
+        if (o3 instanceof SpeedItem) {
+            speed = Sprite.SCALED_SIZE / 8;
+        }
+        if (o2 instanceof SpeedItem) {
+            speed = Sprite.SCALED_SIZE / 8;
+        }
+        if (o1 instanceof SpeedItem) {
+            speed = Sprite.SCALED_SIZE / 8;
+        }
+
         if (o1 != null) {
             if (o1.collide(this)) {
                 return false;
@@ -167,6 +208,7 @@ public class Bomber extends Entity {
                 return false;
             }
         }
+
 
 //        System.out.println(myround(dx) + " " + myround2(dx));
         return true;
@@ -196,6 +238,11 @@ public class Bomber extends Entity {
     public void killed() {
         img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, animate, 20).getFxImage();
         alive = false;
-        System.out.println("h");
     }
+
+    public void setSpeed () {
+        this.speed = speed * 2;
+    }
+
+
 }

@@ -3,7 +3,11 @@ package uet.oop.bomberman.Map;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Character.*;
+import uet.oop.bomberman.entities.Character.Balloon;
+import uet.oop.bomberman.entities.Character.Bomber;
+import uet.oop.bomberman.entities.Character.Oneal;
+import uet.oop.bomberman.entities.Enemy.Ballon2;
+import uet.oop.bomberman.entities.Enemy.Enemy;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Items.Bomb;
 import uet.oop.bomberman.entities.Items.SpeedItem;
@@ -68,23 +72,27 @@ public class Map {
 
     public void createMap() {
         readMap();
+//        for (int i = 0; i < height; i++) {
+//            for (int j = 0; j < width; j++) {
+//                stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
+//            }
+//        }
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; ++j) {
                 switch (_lineTiles[i].charAt(j)) {
                     case '#':
                         stillObjects.add(new Wall(j, i, Sprite.wall.getFxImage()));
                         break;
-
+//                    case '*':
+//                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+//                        break;
                     case 'x':
                         stillObjects.add(new Portal(j, i, Sprite.portal.getFxImage()));
-                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
-                        break;
-                    case '*':
-                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+//                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
                     case 's':
                         stillObjects.add(new SpeedItem(j, i, Sprite.powerup_speed.getFxImage()));
-                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+//                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
                     default:
                         stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
@@ -97,20 +105,25 @@ public class Map {
             for (int j = 0; j < width; ++j) {
                 switch (_lineTiles[i].charAt(j)) {
                     case '1':
-                        entities.add(new Balloon(j, i, Sprite.balloom_left1.getFxImage()));
+                        entities.add(new Ballon2(j, i, Sprite.balloom_left1.getFxImage()));
                         break;
                     case '2':
                         entities.add(new Oneal(j, i, Sprite.oneal_right1.getFxImage()));
 //                        entities.add(new Bomb(j, i, Sprite.bomb.getFxImage()));
                         break;
-                    case '3' :
-                        entities.add(new Doll(j, i, Sprite.doll_left1.getFxImage()));
+//                    case '*':
+//                        entities.add(new Brick(j, i, Sprite.brick.getFxImage()));
+//                        break;
+                    case '*':
+                        entities.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
-                    case '4':
-                        entities.add(new Kondoria(j, i, Sprite.kondoria_right1.getFxImage()));
+                    case 'x':
+//                        entities.add(new Portal(j, i, Sprite.portal.getFxImage()));
+                        entities.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
-                    case '5' :
-                        entities.add(new Minvo(j, i, Sprite.minvo_right2.getFxImage()));
+                    case 's':
+//                        entities.add(new SpeedItem(j, i, Sprite.powerup_speed.getFxImage()));
+                        entities.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
                     case 'p':
                         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
@@ -154,6 +167,9 @@ public class Map {
         j = j * Sprite.SCALED_SIZE;
         for (int id = 0; id < entities.size(); id++) {
             if (entities.get(id).getX() == i && entities.get(id).getY() == j) {
+                if (entities.get(id) instanceof Brick) {
+                    return entities.get(id);
+                }
                 return entities.get(id);
             }
         }
@@ -165,10 +181,25 @@ public class Map {
         j *= Sprite.SCALED_SIZE;
         for (int id = 0; id < stillObjects.size(); id++) {
             if (stillObjects.get(id).getX() == i && stillObjects.get(id).getY() == j) {
+                if (stillObjects.get(id) instanceof Brick) {
+                    return stillObjects.get(id);
+                }
+                if (stillObjects.get(id) instanceof Wall) {
+                    return stillObjects.get(id);
+                }
+                if (stillObjects.get(id) instanceof Grass) {
+                    return stillObjects.get(id);
+                }
                 return stillObjects.get(id);
             }
         }
         return null;
+    }
+
+    public void addAllEntities(ArrayList<Entity> entities) {
+        for (int i = 0; i < entities.size(); i++) {
+            this.entities.add(entities.get(i));
+        }
     }
 
     public int getHeight() {
@@ -180,17 +211,45 @@ public class Map {
     }
 
     public void update() {
+        for (int i = 0; i < stillObjects.size(); i++) {
+            if (stillObjects.get(i).isRemove()) {
+//                int dx = stillObjects.get(i).getX() / Sprite.SCALED_SIZE;
+//                int dy = stillObjects.get(i).getY() / Sprite.SCALED_SIZE;
+//                Entity a = new Grass(stillObjects.get(i).getX() / Sprite.SCALED_SIZE, stillObjects.get(i).getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
+//                stillObjects.add(a);
+                stillObjects.remove(i);
+
+            }
+            else {
+                stillObjects.get(i).update();
+            }
+        }
         for (int i = 0; i < entities.size(); i++) {
-            entities.get(i).update();
+            if (entities.get(i).isRemove()) {
+                entities.remove(i);
+            }
+            else {
+                entities.get(i).update();
+            }
+
+        }
+    }
+
+    public void update2() {
+        for (int i = 0; i < stillObjects.size(); i++) {
+            stillObjects.get(i).update();
         }
     }
 
     public void render(GraphicsContext gc, Canvas canvas) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        stillObjects.forEach(g -> g.render(gc));
+        for (int i = 0; i < stillObjects.size(); i++) {
+            stillObjects.get(i).render(gc);
+        }
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).render(gc);
         }
+
     }
 
 

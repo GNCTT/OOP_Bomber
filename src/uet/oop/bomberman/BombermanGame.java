@@ -103,10 +103,6 @@ public class BombermanGame extends Application {
     public void createMap() {
         WIDTH = map.getWidth();
         HEIGHT = map.getHeight();
-        stillObjects = map.getStillObjects();
-        entities = map.getEntities();
-
-
     }
 
 
