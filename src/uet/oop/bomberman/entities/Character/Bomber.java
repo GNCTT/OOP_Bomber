@@ -20,11 +20,13 @@ public class Bomber extends Entity {
     private boolean moving;
     private boolean alive;
     private int timeBomb = 0;
+    private int timePower;
 
     public Bomber(int x, int y, Image img) {
         super( x, y, img);
         speed = Sprite.SCALED_SIZE / 16;
         alive = true;
+        timePower = 20;
     }
 
     @Override
