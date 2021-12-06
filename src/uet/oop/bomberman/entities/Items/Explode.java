@@ -2,6 +2,8 @@ package uet.oop.bomberman.entities.Items;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Character.Bomber;
+import uet.oop.bomberman.entities.Enemy.Enemy;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Tiles.Brick;
 import uet.oop.bomberman.graphics.Sprite;
@@ -26,6 +28,12 @@ public class Explode extends Entity {
     public boolean collide(Entity a) {
         if (a instanceof Brick) {
             return true;
+        }
+        if (a instanceof Bomber) {
+            ((Bomber) a).setAlive();
+        }
+        if (a instanceof Enemy) {
+            ((Enemy) a).killed();
         }
         return false;
     }
