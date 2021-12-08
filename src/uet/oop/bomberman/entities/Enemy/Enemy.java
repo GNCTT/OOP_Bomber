@@ -133,20 +133,6 @@ public abstract class Enemy extends Entity {
             }
         }
 
-        if (o4 instanceof SpeedItem) {
-            speed = Sprite.SCALED_SIZE / 8;
-        }
-
-        if (o3 instanceof SpeedItem) {
-            speed = Sprite.SCALED_SIZE / 8;
-        }
-        if (o2 instanceof SpeedItem) {
-            speed = Sprite.SCALED_SIZE / 8;
-        }
-        if (o1 instanceof SpeedItem) {
-            speed = Sprite.SCALED_SIZE / 8;
-        }
-
         if (o1 != null) {
             if (o1.collide(this)) {
                 return false;

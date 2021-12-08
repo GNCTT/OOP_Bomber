@@ -24,6 +24,8 @@ public class Bomber extends Entity {
     private boolean checkSpeed;
     private int afterKill;
 
+    private int countBomb;
+
     public Bomber(int x, int y, Image img) {
         super( x, y, img);
         speed = Sprite.SCALED_SIZE / 16;
@@ -31,6 +33,7 @@ public class Bomber extends Entity {
         timePower = 200;
         checkSpeed = false;
         afterKill = 50;
+        countBomb = 2;
     }
 
     @Override
@@ -67,7 +70,6 @@ public class Bomber extends Entity {
         if (BombermanGame.up) {
             dy -= 1 * speed;
             moving = true;
-
         }
         if (BombermanGame.down) {
             dy = 1 * speed;
@@ -82,8 +84,8 @@ public class Bomber extends Entity {
             moving = true;
         }
         if (BombermanGame.space && timeBomb < 0) {
+            countBomb --;
 //            Entity a = new Bomber(x, y, Sprite.movingSprite(Sprite.bomb_1, Sprite.bomb_2, animate, 20).getFxImage());
-            Bomb a = new Bomb(x, y, Sprite.bomb.getFxImage());
             BombermanGame.map.addBomb((int) (x + Sprite.SCALED_SIZE / 2),(int) (y + Sprite.SCALED_SIZE / 2));
             timeBomb = 80;
         }
@@ -160,6 +162,7 @@ public class Bomber extends Entity {
         int x2 = myround2(dx);
         int y1 = myround(dy);
         int y2 = myround3(dy);
+        Entity o9 = BombermanGame.map.getEntity(x1, x2, y1, y2);
         Entity o1 = BombermanGame.map.getObjectnotGrass(x1, y1);
         Entity o2 = BombermanGame.map.getObjectnotGrass(x1, y2);
         Entity o3 = BombermanGame.map.getObjectnotGrass(x2, y1);
@@ -189,15 +192,6 @@ public class Bomber extends Entity {
             }
         }
 
-//        System.out.println(b1);
-//        System.out.println(b2);
-//        System.out.println(b3);
-//        System.out.println(b4);
-//        System.out.println(o1);
-//        System.out.println(o2);
-//        System.out.println(o3);
-//        System.out.println(o4);
-
         if (o1 != null) {
             if (o1.collide(this)) {
                 return false;
@@ -219,8 +213,6 @@ public class Bomber extends Entity {
             }
         }
 
-
-//        System.out.println(myround(dx) + " " + myround2(dx));
         return true;
     }
     private boolean canMove() {

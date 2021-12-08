@@ -17,6 +17,7 @@ import uet.oop.bomberman.entities.Tiles.Portal;
 import uet.oop.bomberman.entities.Tiles.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -34,6 +35,8 @@ public class Map {
     private ArrayList<Entity> entities = new ArrayList<>();
     private ArrayList<Entity> stillObjects = new ArrayList<>();
 
+    public static ArrayList<Entity> explodes = new ArrayList<>();
+
     public Map(int level) {
         this.level = level;
     }
@@ -47,7 +50,6 @@ public class Map {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             line = bufferedReader.readLine();
-            System.out.println(line);
             StringTokenizer tokens = new StringTokenizer(line);
 
             level = Integer.parseInt(tokens.nextToken());
@@ -112,18 +114,12 @@ public class Map {
                     case '1':
                         entities.add(new Ballon2(j, i, Sprite.balloom_left1.getFxImage()));
                         break;
-//                    case '2':
-//                        entities.add(new Oneal(j, i, Sprite.oneal_right1.getFxImage()));
-//                        break;
                     case '3':
                         entities.add(new Doll2(j, i, Sprite.doll_right1.getFxImage()));
                         break;
                     case '4':
                         entities.add(new Kondoria2(j, i, Sprite.kondoria_right1.getFxImage()));
                         break;
-//                    case '5':
-//                        entities.add(new Minvo(j, i, Sprite.minvo_right1.getFxImage()));
-//                        break;
                     case '6':
                         entities.add(new Conma2(j, i, Sprite.conma_right1.getFxImage()));
                         break;
@@ -131,14 +127,8 @@ public class Map {
                         entities.add(new Conlon2(j, i, Sprite.conlon_right1.getFxImage()));
                         break;
                     case '*':
-                        entities.add(new Brick(j, i, Sprite.brick.getFxImage()));
-                        break;
-                    case 'x':
-//                        entities.add(new Portal(j, i, Sprite.portal.getFxImage()));
-                        entities.add(new Brick(j, i, Sprite.brick.getFxImage()));
-                        break;
                     case 's':
-//                        entities.add(new SpeedItem(j, i, Sprite.powerup_speed.getFxImage()));
+                    case 'x':
                         entities.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
                     case 'p':
@@ -147,6 +137,23 @@ public class Map {
                 }
 
             }
+        }
+    }
+
+    public Entity getExplode(int dx, int dy) {
+        Entity a = null;
+        System.out.println("???");
+        for (int i = 0; i < explodes.size(); i++) {
+            if (explodes.get(i).getX() == dx && explodes.get(i).getY() == dy) {
+                return explodes.get(i);
+            }
+        }
+        return a;
+    }
+
+    public void addAllExplodes(ArrayList<Entity> entities) {
+        for (int i = 0; i < entities.size(); i++) {
+            explodes.add(entities.get(i));
         }
     }
 
@@ -179,22 +186,14 @@ public class Map {
     }
 
     public Entity getEntity(int i, int j) {
-//        for (int id = 0; id < entities.size(); id++) {
-////            entities.get(id).update();
-//        }
-        System.out.println(entities.get(0).getX());
-        System.out.println(entities.get(24).getX());
-        System.out.println(entities.get(0).getX() == entities.get(24).getX());
         i *= Sprite.SCALED_SIZE;
         j *= Sprite.SCALED_SIZE;
+        if (getExplode(i, j) != null) {
+            System.out.println("oo");
+            return getExplode(i, j);
+        }
         for (int id = 0; id < entities.size(); id++) {
-//            if (entities.get(id) instanceof Enemy) {
-//                System.out.println("he" + id + "  " + entities.get(id).getX() + " | " + entities.get(id).getY());
-//            }
             if (entities.get(id).getX() == i && entities.get(id).getY() == j) {
-//                if (entities.get(id) instanceof Brick) {
-//                    return entities.get(id);
-//
                 return entities.get(id);
             }
         }
@@ -255,6 +254,7 @@ public class Map {
     }
 
     public void update() {
+        System.out.println(entities.size());
         for (int i = 0; i < stillObjects.size(); i++) {
             if (stillObjects.get(i).isRemove()) {
 //                int dx = stillObjects.get(i).getX() / Sprite.SCALED_SIZE;
@@ -309,6 +309,19 @@ public class Map {
         entities = new ArrayList<>();
         stillObjects = new ArrayList<>();
         createMap();
+    }
+
+    public Entity getEntity(int x1,int x2,int y1, int y2) {
+        x1 *= Sprite.SCALED_SIZE;
+        x2 *= Sprite.SCALED_SIZE;
+        y1 *= Sprite.SCALED_SIZE;
+        y2 *= Sprite.SCALED_SIZE;
+        for (int id = 0; id < entities.size(); id++) {
+            if ((entities.get(id).getX() >= x1 && entities.get(id).getX() <= x2) && entities.get(id).getY() >= y1 && entities.get(id).getY() <= y2 && !(entities.get(id) instanceof Bomber)) {
+                return entities.get(id);
+            }
+        }
+        return null;
     }
 
 

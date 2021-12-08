@@ -13,82 +13,78 @@ import java.util.ArrayList;
 public class Bomb extends Entity {
     private int animate = 0;
     private int countTime;
-    public static int explodeTime;
     private ArrayList<Entity> explodes;
     public Bomb(int x, int y, Image img) {
         super(x, y, img);
-        countTime = 50;
-        explodeTime = 20;
+        countTime = 120;
         explodes = new ArrayList<>();
     }
 
     @Override
     public void update() {
         countTime --;
-        if (countTime < 0) {
-            explodeTime --;
-        }
         if (animate < 7500) {
             animate ++;
         } else animate = 0;
-        img = Sprite.movingSprite(Sprite.bomb_1, Sprite.bomb_2, animate, 20).getFxImage();
-        explode(countTime, explodeTime);
+        img = Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, animate, 60).getFxImage();
+        if (countTime < 0) {
+            explode();
+        }
     }
 
     @Override
     public boolean collide(Entity a) {
-//        if (a instanceof Bomber) {
-//            return false;
-//        }
+        if (a instanceof Explode) {
+            this.explode();
+        }
         return false;
     }
 
-    private void explode(int time, int time2) {
-        if (time < 0) {
-            int dx = (int) x / Sprite.SCALED_SIZE;
-            int dy = (int) y / Sprite.SCALED_SIZE;
-            img = Sprite.movingSprite(Sprite.bomb_exploded, Sprite.bomb_exploded1, Sprite.bomb_exploded2, animate, 20).getFxImage();
-            Entity top = BombermanGame.map.getEntity(dx, dy - 1);
-            Entity bot = BombermanGame.map.getEntity(dx, dy + 1);
-            Entity left = BombermanGame.map.getEntity(dx - 1, dy);
-            Entity right = BombermanGame.map.getEntity(dx + 1, dy);
-            if (top instanceof Brick) {
-                top.setBeDestroy(true);
-            }
-            if (!(top instanceof Brick) && BombermanGame.map.getObject(dx, dy - 1) instanceof Grass) {
-                explodes.add(new Explode(dx, dy - 1, Sprite.movingSprite(Sprite.explosion_vertical_top_last, Sprite.explosion_vertical_top_last1,Sprite.explosion_vertical_top_last2, animate, 20).getFxImage()));
-            }
-            if (left instanceof Brick) {
-                left.setBeDestroy(true);
-            }
-            if (!(left instanceof Brick) && BombermanGame.map.getObject(dx - 1, dy) instanceof Grass) {
-                explodes.add(new Explode(dx - 1, dy, Sprite.movingSprite(Sprite.explosion_horizontal_left_last, Sprite.explosion_horizontal_left_last1,Sprite.explosion_horizontal_left_last2, animate, 20).getFxImage()));
-            }
-            if (right instanceof Brick) {
-                right.setBeDestroy(true);
-            }
-            if (!(right instanceof Brick) && BombermanGame.map.getObject(dx + 1, dy) instanceof Grass) {
-                explodes.add(new Explode(dx + 1, dy, Sprite.movingSprite(Sprite.explosion_horizontal_right_last, Sprite.explosion_horizontal_right_last1,Sprite.explosion_horizontal_right_last2, animate, 20).getFxImage()));
-            }
-            if (bot instanceof Brick) {
-                bot.setBeDestroy(true);
-            }
-            if (!(bot instanceof Brick) && BombermanGame.map.getObject(dx, dy + 1) instanceof Grass) {
-                explodes.add(new Explode(dx, dy + 1, Sprite.movingSprite(Sprite.explosion_vertical_down_last, Sprite.explosion_vertical_down_last1, Sprite.explosion_vertical_down_last2, animate, 20).getFxImage()));
-            }
+    public void explode() {
+        int dx = (int) x / Sprite.SCALED_SIZE;
+        int dy = (int) y / Sprite.SCALED_SIZE;
+        remove = true;
+        Entity top = BombermanGame.map.getEntity(dx, dy - 1);
+        Entity bot = BombermanGame.map.getEntity(dx, dy + 1);
+        Entity left = BombermanGame.map.getEntity(dx - 1, dy);
+        Entity right = BombermanGame.map.getEntity(dx + 1, dy);
+        Entity mid = BombermanGame.map.getEntity(dx, dy);
+        if (mid instanceof Brick) {
+            mid.setBeDestroy(true);
+        }
+        if (!(mid instanceof Brick) && BombermanGame.map.getObject(dx, dy) instanceof Grass) {
+            explodes.add(new Explode(dx, dy, 4));
+        }
+        if (top instanceof Brick) {
+            top.setBeDestroy(true);
+        }
+        if (!(top instanceof Brick) && BombermanGame.map.getObject(dx, dy - 1) instanceof Grass) {
+            explodes.add(new Explode(dx, dy - 1, 0));
+        }
+        if (left instanceof Brick) {
+            left.setBeDestroy(true);
+        }
+        if (!(left instanceof Brick) && BombermanGame.map.getObject(dx - 1, dy) instanceof Grass) {
+            explodes.add(new Explode(dx - 1, dy, 3));
+        }
+        if (right instanceof Brick) {
+            right.setBeDestroy(true);
+        }
+        if (!(right instanceof Brick) && BombermanGame.map.getObject(dx + 1, dy) instanceof Grass) {
+            explodes.add(new Explode(dx + 1, dy, 1));
+        }
+        if (bot instanceof Brick) {
+            bot.setBeDestroy(true);
+        }
+        if (!(bot instanceof Brick) && BombermanGame.map.getObject(dx, dy + 1) instanceof Grass) {
+            explodes.add(new Explode(dx, dy + 1, 2));
+        }
 
 //            explodes.add(new Explode(dx, dy + 1, Sprite.movingSprite(Sprite.explosion_vertical_down_last, Sprite.explosion_vertical_down_last1, Sprite.explosion_vertical_down_last2, animate, 20).getFxImage()));
 //            explodes.add(new Explode(dx + 1, dy, Sprite.movingSprite(Sprite.explosion_horizontal_right_last, Sprite.explosion_horizontal_right_last1,Sprite.explosion_horizontal_right_last2, animate, 20).getFxImage()));
 
 
-            BombermanGame.map.addAllEntities(explodes);
-        }
-        if (time2 < 0) {
-            remove = true;
-            BombermanGame.map.removeEntity(this);
-        }
-
-
+        BombermanGame.map.addAllEntities(explodes);
     }
 
 }

@@ -27,6 +27,11 @@ public abstract class Entity {
         beDestroy = false;
     }
 
+    public Entity(int x, int y) {
+        this.x = x * Sprite.SCALED_SIZE;
+        this.y = y * Sprite.SCALED_SIZE;
+    }
+
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x, y);
     }
