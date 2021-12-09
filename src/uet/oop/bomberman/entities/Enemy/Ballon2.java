@@ -14,6 +14,7 @@ public class Ballon2 extends Enemy {
     public Ballon2(int x, int y, Image img) {
         super(x, y, img);
         index = 0;
+        direction = 0;
     }
 
     @Override
@@ -41,13 +42,13 @@ public class Ballon2 extends Enemy {
         }
     }
 
-    @Override
-    public boolean collide(Entity a) {
-        if (a instanceof Bomber) {
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean collide(Entity a) {
+//        if (a instanceof Bomber) {
+//            return true;
+//        }
+//        return false;
+//    }
 
 }
 

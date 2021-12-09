@@ -1,8 +1,11 @@
 package uet.oop.bomberman.entities.Enemy;
 
+import com.sun.xml.internal.ws.server.EndpointAwareTube;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.Items.Explode;
 import uet.oop.bomberman.entities.Items.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -21,13 +24,14 @@ public abstract class Enemy extends Entity {
         animate = 0;
         step = 160;
         direction = 0;
-        speed = Sprite.SCALED_SIZE / 32 - 1;
+        speed = Sprite.SCALED_SIZE / 32;
     }
 
     public Enemy(int x, int y, Image img, int animate) {
         super(x, y, img);
         this.animate = animate;
     }
+
 
     public void animate() {
         if (animate < 7500) {
@@ -197,4 +201,12 @@ public abstract class Enemy extends Entity {
         img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, animate, 20).getFxImage();
         alive = false;
     }
+
+    public boolean collide(Entity a) {
+        if ( a instanceof Bomber) {
+            ((Bomber) a).setAlive();
+        }
+        return false;
+    }
+
 }

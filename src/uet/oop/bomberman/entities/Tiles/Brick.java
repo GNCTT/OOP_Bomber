@@ -33,17 +33,6 @@ public class Brick extends Entity {
         if (animate < 7500) {
             animate ++;
         } else animate = 0;
-//        Entity a = BombermanGame.map.getEntity(dx, dy);
-//        System.out.println(a);
-//        if (a != null) {
-//            if (a.collide(this)) {
-//                broken = true;
-////                BombermanGame.map.removeObject(this);
-////                BombermanGame.map.addObject(new Grass(dx, dy, Sprite.grass.getFxImage()));
-//
-//
-//            }
-//        }
         if (beDestroy) {
             timecount --;
 

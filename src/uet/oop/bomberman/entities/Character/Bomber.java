@@ -21,12 +21,16 @@ public class Bomber extends Entity {
     private boolean alive;
     private int timeBomb = 0;
     private int timePower;
+    private boolean checkSpeed;
+    private int afterKill;
 
     public Bomber(int x, int y, Image img) {
         super( x, y, img);
         speed = Sprite.SCALED_SIZE / 16;
         alive = true;
-        timePower = 20;
+        timePower = 200;
+        checkSpeed = false;
+        afterKill = 50;
     }
 
     @Override
@@ -39,6 +43,18 @@ public class Bomber extends Entity {
         if (timeBomb < -7500) timeBomb = 0;
         else timeBomb --;
         input();
+        if (checkSpeed && timePower >= 0) {
+            speed = 1 + Sprite.SCALED_SIZE / 16;
+            timePower--;
+            if (timePower < 0) {
+                checkSpeed = false;
+                speed = Sprite.SCALED_SIZE / 16;
+                timePower = 200;
+            }
+        }
+        if (!alive) {
+            killed();
+        }
     }
 
     @Override
@@ -137,13 +153,6 @@ public class Bomber extends Entity {
 
     }
 
-
-
-
-    public void setSpeed () {
-        this.speed = speed * 2;
-    }
-
     public boolean canMove(int _x, int _y) {
         int dx = x + _x;
         int dy = y + _y;
@@ -151,10 +160,10 @@ public class Bomber extends Entity {
         int x2 = myround2(dx);
         int y1 = myround(dy);
         int y2 = myround3(dy);
-        Entity o1 = BombermanGame.map.getObject(x1, y1);
-        Entity o2 = BombermanGame.map.getObject(x1, y2);
-        Entity o3 = BombermanGame.map.getObject(x2, y1);
-        Entity o4 = BombermanGame.map.getObject(x2, y2);
+        Entity o1 = BombermanGame.map.getObjectnotGrass(x1, y1);
+        Entity o2 = BombermanGame.map.getObjectnotGrass(x1, y2);
+        Entity o3 = BombermanGame.map.getObjectnotGrass(x2, y1);
+        Entity o4 = BombermanGame.map.getObjectnotGrass(x2, y2);
         Entity b1 = BombermanGame.map.getEntity(x1, y1);
         Entity b2 = BombermanGame.map.getEntity(x1, y2);
         Entity b3 = BombermanGame.map.getEntity(x2, y1);
@@ -180,19 +189,14 @@ public class Bomber extends Entity {
             }
         }
 
-        if (o4 instanceof SpeedItem) {
-            speed = Sprite.SCALED_SIZE / 8;
-        }
-
-        if (o3 instanceof SpeedItem) {
-            speed = Sprite.SCALED_SIZE / 8;
-        }
-        if (o2 instanceof SpeedItem) {
-            speed = Sprite.SCALED_SIZE / 8;
-        }
-        if (o1 instanceof SpeedItem) {
-            speed = Sprite.SCALED_SIZE / 8;
-        }
+//        System.out.println(b1);
+//        System.out.println(b2);
+//        System.out.println(b3);
+//        System.out.println(b4);
+//        System.out.println(o1);
+//        System.out.println(o2);
+//        System.out.println(o3);
+//        System.out.println(o4);
 
         if (o1 != null) {
             if (o1.collide(this)) {
@@ -242,7 +246,19 @@ public class Bomber extends Entity {
     }
 
     public void killed() {
-        img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, animate, 20).getFxImage();
+        if (afterKill >= 0) {
+            afterKill--;
+            img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, animate, 20).getFxImage();
+        } else {
+            remove = true;
+        }
+    }
+
+    public void setSpeed() {
+        checkSpeed = true;
+    }
+
+    public void setAlive() {
         alive = false;
     }
 }

@@ -13,6 +13,8 @@ import uet.oop.bomberman.entities.Tiles.Portal;
 import uet.oop.bomberman.entities.Tiles.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -82,11 +84,14 @@ public class Map {
 //                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
 //                        break;
                     case 'x':
+                        stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
                         stillObjects.add(new Portal(j, i, Sprite.portal.getFxImage()));
 //                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
                     case 's':
+                        stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
                         stillObjects.add(new SpeedItem(j, i, Sprite.powerup_speed.getFxImage()));
+
 //                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
                     default:
@@ -102,27 +107,24 @@ public class Map {
                     case '1':
                         entities.add(new Ballon2(j, i, Sprite.balloom_left1.getFxImage()));
                         break;
-                    case '2':
-                        entities.add(new Oneal2(j, i, Sprite.oneal_right1.getFxImage()));
-                        break;
+//                    case '2':
+//                        entities.add(new Oneal(j, i, Sprite.oneal_right1.getFxImage()));
+//                        break;
                     case '3':
                         entities.add(new Doll2(j, i, Sprite.doll_right1.getFxImage()));
                         break;
                     case '4':
                         entities.add(new Kondoria2(j, i, Sprite.kondoria_right1.getFxImage()));
                         break;
-                    case '5':
-                        entities.add(new Minvo2(j, i, Sprite.minvo_right1.getFxImage()));
-                        break;
+//                    case '5':
+//                        entities.add(new Minvo(j, i, Sprite.minvo_right1.getFxImage()));
+//                        break;
                     case '6':
                         entities.add(new Conma2(j, i, Sprite.conma_right1.getFxImage()));
                         break;
                     case '7':
                         entities.add(new Conlon2(j, i, Sprite.conlon_right1.getFxImage()));
                         break;
-//                    case '*':
-//                        entities.add(new Brick(j, i, Sprite.brick.getFxImage()));
-//                        break;
                     case '*':
                         entities.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
@@ -172,13 +174,22 @@ public class Map {
     }
 
     public Entity getEntity(int i, int j) {
-        i = i * Sprite.SCALED_SIZE;
-        j = j * Sprite.SCALED_SIZE;
+//        for (int id = 0; id < entities.size(); id++) {
+////            entities.get(id).update();
+//        }
+        System.out.println(entities.get(0).getX());
+        System.out.println(entities.get(24).getX());
+        System.out.println(entities.get(0).getX() == entities.get(24).getX());
+        i *= Sprite.SCALED_SIZE;
+        j *= Sprite.SCALED_SIZE;
         for (int id = 0; id < entities.size(); id++) {
+//            if (entities.get(id) instanceof Enemy) {
+//                System.out.println("he" + id + "  " + entities.get(id).getX() + " | " + entities.get(id).getY());
+//            }
             if (entities.get(id).getX() == i && entities.get(id).getY() == j) {
-                if (entities.get(id) instanceof Brick) {
-                    return entities.get(id);
-                }
+//                if (entities.get(id) instanceof Brick) {
+//                    return entities.get(id);
+//
                 return entities.get(id);
             }
         }
@@ -188,15 +199,34 @@ public class Map {
     public Entity getObject(int i, int j) {
         i *= Sprite.SCALED_SIZE;
         j *= Sprite.SCALED_SIZE;
+//        System.out.println(i + " " + j);
         for (int id = 0; id < stillObjects.size(); id++) {
             if (stillObjects.get(id).getX() == i && stillObjects.get(id).getY() == j) {
-                if (stillObjects.get(id) instanceof Brick) {
-                    return stillObjects.get(id);
-                }
+//                if (stillObjects.get(id) instanceof Brick) {
+//                    return stillObjects.get(id);
+//                }
                 if (stillObjects.get(id) instanceof Wall) {
                     return stillObjects.get(id);
                 }
                 if (stillObjects.get(id) instanceof Grass) {
+                    return stillObjects.get(id);
+                }
+                return stillObjects.get(id);
+            }
+        }
+        return null;
+    }
+
+    public Entity getObjectnotGrass(int i, int j) {
+        i *= Sprite.SCALED_SIZE;
+        j *= Sprite.SCALED_SIZE;
+//        System.out.println(i + " " + j);
+        for (int id = 0; id < stillObjects.size(); id++) {
+            if (stillObjects.get(id).getX() == i && stillObjects.get(id).getY() == j && !(stillObjects.get(id) instanceof Grass)) {
+                if (stillObjects.get(id) instanceof SpeedItem) {
+                    return stillObjects.get(id);
+                }
+                if (stillObjects.get(id) instanceof Wall) {
                     return stillObjects.get(id);
                 }
                 return stillObjects.get(id);
@@ -259,6 +289,21 @@ public class Map {
             entities.get(i).render(gc);
         }
 
+    }
+
+    private void clearMap(GraphicsContext gc) {
+        gc.clearRect(0, 0, width, height);
+    }
+
+    public void changeLevel() {
+        if (level < 5) {
+            level ++;
+        } else {
+            level = 1;
+        }
+        entities = new ArrayList<>();
+        stillObjects = new ArrayList<>();
+        createMap();
     }
 
 
