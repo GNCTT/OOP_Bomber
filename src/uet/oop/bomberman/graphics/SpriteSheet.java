@@ -13,6 +13,7 @@ public class SpriteSheet {
 	public int[] _pixels;
 
 	public static SpriteSheet tiles = new SpriteSheet("/textures/classic.png", 256);
+//	public static SpriteSheet tiles3 = new SpriteSheet("/textures/texture.png", 300);
 
 	public SpriteSheet(String path, int size) {
 		_path = path;
@@ -21,6 +22,12 @@ public class SpriteSheet {
 		load();
 	}
 
+	public SpriteSheet(String path, int size, int size2) {
+		_path = path;
+		SIZE = size;
+		_pixels = new int[SIZE * size2];
+		load();
+	}
 	private void load() {
 		try {
 			URL a = SpriteSheet.class.getResource(_path);
