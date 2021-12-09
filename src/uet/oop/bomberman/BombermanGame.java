@@ -6,22 +6,21 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import uet.oop.bomberman.Map.Map;
 import uet.oop.bomberman.entities.*;
-import uet.oop.bomberman.entities.Character.Balloon;
-import uet.oop.bomberman.entities.Character.Bomber;
-import uet.oop.bomberman.entities.Character.Oneal;
-import uet.oop.bomberman.entities.Items.Flame;
-import uet.oop.bomberman.entities.Items.SpeedItem;
-import uet.oop.bomberman.entities.Tiles.Brick;
-import uet.oop.bomberman.entities.Tiles.Grass;
-import uet.oop.bomberman.entities.Tiles.Portal;
-import uet.oop.bomberman.entities.Tiles.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import uet.oop.bomberman.sound.Sound;
+
+import javax.sound.sampled.*;
+import java.io.File;
 
 public class BombermanGame extends Application {
 
@@ -43,6 +42,7 @@ public class BombermanGame extends Application {
 
     @Override
     public void start(Stage stage) {
+
         map = new Map(5);
         map.createMap();
         System.out.println(map.getHeight() +" " + HEIGHT);
@@ -63,6 +63,7 @@ public class BombermanGame extends Application {
         stage.setScene(scene);
         stage.show();
 
+        Sound.play("D:\\OOP-Dic\\OOP_Bomber\\res\\sound\\soundtrack.wav");
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -89,8 +90,7 @@ public class BombermanGame extends Application {
                 });
                 //de update nhan vat(toa do , hinh anh ...)
                 update();
-
-                // ve ra man hinh 
+                // ve ra man hinh
                 render();
 
             }
