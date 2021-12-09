@@ -1,41 +1,25 @@
 package uet.oop.bomberman.sound;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import sun.applet.Main;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import java.io.File;
 
 public class Sound {
     public static void play(String sound) {
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Clip clip = AudioSystem.getClip();
-                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                            Main.class.getResourceAsStream("/sound/" + sound + ".wav"));
-                    clip.open(inputStream);
-                    clip.start();
-                } catch (Exception e) {
-                    System.err.println(e.getMessage());
-                }
-            }
-        }).start();
+        //Instantiating Media class
+        Media media = new Media(new File(sound).toURI().toString());
+
+        //Instantiating MediaPlayer class
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+
+        //by setting this property to true, the audio will be played
+        //mediaPlayer.setAutoPlay(true);
+        mediaPlayer.play();
         
-    }
-    public static void stop(String sound){
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Clip clip = AudioSystem.getClip();
-                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                            Main.class.getResourceAsStream("/sound/" + sound + ".wav"));
-                    clip.open(inputStream);
-                    clip.stop();
-                } catch (Exception e) {
-                    System.err.println(e.getMessage());
-                }
-            }
-        }).start();
     }
 }

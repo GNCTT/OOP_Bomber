@@ -7,6 +7,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Tiles.Brick;
 import uet.oop.bomberman.entities.Tiles.Grass;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.sound.Sound;
 
 import java.util.ArrayList;
 
@@ -84,6 +85,7 @@ public class Bomb extends Entity {
             BombermanGame.map.addAllEntities(explodes);
         }
         if (time2 < 0) {
+            Sound.play("D:\\OOP-Dic\\OOP_Bomber\\res\\sound\\BOM_11_M.wav");
             remove = true;
             BombermanGame.map.removeEntity(this);
         }

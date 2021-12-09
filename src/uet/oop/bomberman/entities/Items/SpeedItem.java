@@ -6,6 +6,7 @@ import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Tiles.Grass;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.sound.Sound;
 
 public class SpeedItem extends Entity {
 
@@ -21,6 +22,7 @@ public class SpeedItem extends Entity {
     @Override
     public boolean collide(Entity a) {
         if (a instanceof Bomber) {
+            Sound.play("D:\\OOP-Dic\\OOP_Bomber\\res\\sound\\Item.wav");
             System.out.println("hello");
             this.remove = true;
             ((Bomber) a).setSpeed();

@@ -11,6 +11,7 @@ import uet.oop.bomberman.entities.Items.Bomb;
 import uet.oop.bomberman.entities.Items.SpeedItem;
 import uet.oop.bomberman.entities.Tiles.Brick;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.sound.Sound;
 
 public class Bomber extends Entity {
     private int animate = 0;
@@ -83,6 +84,7 @@ public class Bomber extends Entity {
         }
         if (BombermanGame.space && timeBomb < 0) {
 //            Entity a = new Bomber(x, y, Sprite.movingSprite(Sprite.bomb_1, Sprite.bomb_2, animate, 20).getFxImage());
+            Sound.play("D:\\OOP-Dic\\OOP_Bomber\\res\\sound\\BOM_SET.wav");
             Bomb a = new Bomb(x, y, Sprite.bomb.getFxImage());
             BombermanGame.map.addBomb((int) (x + Sprite.SCALED_SIZE / 2),(int) (y + Sprite.SCALED_SIZE / 2));
             timeBomb = 80;

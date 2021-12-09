@@ -63,18 +63,7 @@ public class BombermanGame extends Application {
         stage.setScene(scene);
         stage.show();
 
-        String path = "D:\\OOP-Dic\\OOP_Bomber\\res\\sound\\BOM_SET.wav";
-
-        //Instantiating Media class
-        Media media = new Media(new File(path).toURI().toString());
-
-        //Instantiating MediaPlayer class
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-
-        //by setting this property to true, the audio will be played
-        //mediaPlayer.setAutoPlay(true);
-        mediaPlayer.play();
-
+        Sound.play("D:\\OOP-Dic\\OOP_Bomber\\res\\sound\\soundtrack.wav");
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -101,8 +90,7 @@ public class BombermanGame extends Application {
                 });
                 //de update nhan vat(toa do , hinh anh ...)
                 update();
-
-                // ve ra man hinh 
+                // ve ra man hinh
                 render();
 
             }
