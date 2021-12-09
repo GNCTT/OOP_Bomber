@@ -1,12 +1,9 @@
 package uet.oop.bomberman.entities.Tiles;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Character.Balloon;
 import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Enemy.Enemy;
 import uet.oop.bomberman.entities.Entity;
-
-import java.util.Random;
 
 public class Wall extends Entity {
 
