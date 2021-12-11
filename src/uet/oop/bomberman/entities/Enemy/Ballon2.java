@@ -15,6 +15,8 @@ public class Ballon2 extends Enemy {
         super(x, y, img);
         index = 0;
         direction = 0;
+        afterKill = 50;
+        alive = true;
     }
 
     @Override
@@ -37,17 +39,23 @@ public class Ballon2 extends Enemy {
 
                 break;
             default:
-                img = Sprite.balloom_left1.getFxImage();
+                img = Sprite.balloom_dead.getFxImage();
                 break;
         }
     }
 
-//    public boolean collide(Entity a) {
-//        if ( a instanceof Bomber) {
-//            ((Bomber) a).setAlive();
-//        }
-//        return false;
-//    }
+    @Override
+    public void killed() {
+        if (afterKill > 0) {
+            afterKill--;
+            img = Sprite.movingSprite(Sprite.balloom_dead, Sprite.mob_dead1, Sprite.mob_dead2, animate, 20).getFxImage();
+        }
+        else {
+            remove = true;
+        }
+
+    }
+
 
 }
 

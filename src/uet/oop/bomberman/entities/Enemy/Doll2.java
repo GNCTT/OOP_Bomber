@@ -14,6 +14,9 @@ public class Doll2 extends Enemy {
     public Doll2(int x, int y, Image img) {
         super(x, y, img);
         index = 0;
+        direction = 0;
+        afterKill = 50;
+        alive = true;
     }
 
     @Override
@@ -37,12 +40,17 @@ public class Doll2 extends Enemy {
         }
     }
 
-//    public boolean collide(Entity a) {
-//        if ( a instanceof Bomber) {
-//            ((Bomber) a).setAlive();
-//        }
-//        return false;
-//    }
+    @Override
+    public void killed() {
+        if (afterKill > 0) {
+            afterKill--;
+            img = Sprite.movingSprite(Sprite.doll_dead, Sprite.mob_dead1, Sprite.mob_dead2, animate, 20).getFxImage();
+        }
+        else {
+            remove = true;
+        }
+
+    }
 
 }
 

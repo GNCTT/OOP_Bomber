@@ -95,6 +95,7 @@ public class Bomber extends Entity {
             moving = true;
         }
         if (BombermanGame.right) {
+            BombermanGame.map.clearquai();
             dx = 1* speed;
             moving = true;
         }
