@@ -3,10 +3,12 @@ package uet.oop.bomberman.entities.Items;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Character.Bomber;
+import uet.oop.bomberman.entities.Enemy.Enemy;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Tiles.Brick;
 import uet.oop.bomberman.entities.Tiles.Grass;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.sound.Sound;
 
 import java.util.ArrayList;
 
@@ -39,10 +41,14 @@ public class Bomb extends Entity {
         if (a instanceof Explode) {
             this.explode();
         }
+        if (a instanceof Enemy) {
+            explode();
+        }
         return false;
     }
 
     public void explode() {
+        Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\BOM_11_M.wav");
         int dx = (int) x / Sprite.SCALED_SIZE;
         int dy = (int) y / Sprite.SCALED_SIZE;
         remove = true;

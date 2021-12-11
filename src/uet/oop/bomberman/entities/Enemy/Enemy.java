@@ -20,6 +20,7 @@ public abstract class Enemy extends Entity {
     protected int direction;
     private final int maxAnimate = 7500;
     protected int afterKill;
+    protected int point;
 
     protected boolean die;
     public Enemy(int xUnit, int yUnit, Image img) {
@@ -29,7 +30,10 @@ public abstract class Enemy extends Entity {
         direction = 0;
         speed = Sprite.SCALED_SIZE / 32;
         afterKill = 100;
+        width = Sprite.SCALED_SIZE - 10;
+        height = Sprite.SCALED_SIZE - 10;
         die = false;
+        point = 10;
     }
 
     public Enemy(int x, int y, Image img, int animate) {
@@ -212,7 +216,14 @@ public abstract class Enemy extends Entity {
         if ( a instanceof Bomber) {
             ((Bomber) a).setAlive();
         }
+//        if (a instanceof Enemy) {
+//            return true;
+//        }
         return false;
+    }
+
+    public int getPoint() {
+        return this.point;
     }
 
 }

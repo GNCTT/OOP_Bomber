@@ -2,6 +2,9 @@ package uet.oop.bomberman.Map;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Enemy.*;
 import uet.oop.bomberman.entities.Entity;
@@ -24,6 +27,7 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 
 public class Map {
+
     private int level;
     private int height;
     private int width;
@@ -149,7 +153,6 @@ public class Map {
 
     public Entity getExplode(int dx, int dy) {
         Entity a = null;
-        System.out.println("???");
         for (int i = 0; i < explodes.size(); i++) {
             if (explodes.get(i).getX() == dx && explodes.get(i).getY() == dy) {
                 return explodes.get(i);
@@ -161,6 +164,12 @@ public class Map {
     public void addAllExplodes(ArrayList<Entity> entities) {
         for (int i = 0; i < entities.size(); i++) {
             explodes.add(entities.get(i));
+        }
+    }
+
+    public void addAllEnemies(ArrayList<Entity> enmemii) {
+        for (int i = 0; i < enmemii.size(); i++) {
+            enemies.add(enmemii.get(i));
         }
     }
 
@@ -209,20 +218,9 @@ public class Map {
         i *= Sprite.SCALED_SIZE;
         j *= Sprite.SCALED_SIZE;
         if (getExplode(i, j) != null) {
-            System.out.println("oo");
             return getExplode(i, j);
         }
-//        Iterator<Entity> entityIterator = entities.iterator();
-//        while ( entityIterator.hasNext() )
-//        {
-//            Entity entity = entityIterator.next();
-//            System.out.println(entity);
-//            if ( a.intersects(entity) )
-//            {
-//                System.out.println("ok");
-//                return entity;
-//            }
-//        }
+
         for (int id = 0; id < entities.size(); id++) {
             if (entities.get(id).getX() == i && entities.get(id).getY() == j) {
                 return entities.get(id);
@@ -240,7 +238,6 @@ public class Map {
         Iterator<Entity> entityIterator = enemies.iterator();
         while (entityIterator.hasNext()) {
             Entity entity = entityIterator.next();
-            System.out.println(entity);
             if (!(entity instanceof Bomber) && a.intersects(entity)) {
                 return entity;
             }
@@ -256,12 +253,8 @@ public class Map {
     public Entity getObject(int i, int j) {
         i *= Sprite.SCALED_SIZE;
         j *= Sprite.SCALED_SIZE;
-//        System.out.println(i + " " + j);
         for (int id = 0; id < stillObjects.size(); id++) {
             if (stillObjects.get(id).getX() == i && stillObjects.get(id).getY() == j) {
-//                if (stillObjects.get(id) instanceof Brick) {
-//                    return stillObjects.get(id);
-//                }
                 if (stillObjects.get(id) instanceof Wall) {
                     return stillObjects.get(id);
                 }
@@ -277,7 +270,6 @@ public class Map {
     public Entity getObjectnotGrass(int i, int j) {
         i *= Sprite.SCALED_SIZE;
         j *= Sprite.SCALED_SIZE;
-//        System.out.println(i + " " + j);
         for (int id = 0; id < stillObjects.size(); id++) {
             if (stillObjects.get(id).getX() == i && stillObjects.get(id).getY() == j && !(stillObjects.get(id) instanceof Grass)) {
                 if (stillObjects.get(id) instanceof SpeedItem) {
@@ -307,7 +299,6 @@ public class Map {
     }
 
     public void update() {
-        System.out.println(entities.size());
         for (int i = 0; i < stillObjects.size(); i++) {
             if (stillObjects.get(i).isRemove()) {
 //                int dx = stillObjects.get(i).getX() / Sprite.SCALED_SIZE;
@@ -331,6 +322,7 @@ public class Map {
         for (int i = 0; i < enemies.size();  i++) {
             if (enemies.get(i).isRemove()) {
                 enemies.remove(i);
+                Bomber.score += entities.get(i).getPoint();
             } else {
                 enemies.get(i).update();
             }
@@ -354,24 +346,32 @@ public class Map {
 
     public void render(GraphicsContext gc, Canvas canvas) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.setFill(Color.BLACK);
+//        gc.setFill(Color.WHITE);
+        gc.setFont(new Font("Family",  25));
+
         for (int i = 0; i < stillObjects.size(); i++) {
             stillObjects.get(i).render(gc);
         }
         for (int i = 0; i < explodes.size(); i++) {
             explodes.get(i).render(gc);
         }
-        for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).render(gc);
-        }
+
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).render(gc);
         }
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).render(gc);
+        }
+        gc.fillText("level :" + String.valueOf(level), 10, canvas.getHeight() - 5);
+        gc.fillText("score :" + String.valueOf(Bomber.score), 400, canvas.getHeight() - 5);
 
 
     }
 
-    private void clearMap(GraphicsContext gc) {
+    public void clearMap(GraphicsContext gc) {
         gc.clearRect(0, 0, width, height);
+        gc.drawImage(Sprite.wall.getFxImage(), 0, 0);
     }
 
     public void changeLevel() {

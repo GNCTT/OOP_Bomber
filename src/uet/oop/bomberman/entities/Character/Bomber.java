@@ -11,6 +11,7 @@ import uet.oop.bomberman.entities.Items.Bomb;
 import uet.oop.bomberman.entities.Items.SpeedItem;
 import uet.oop.bomberman.entities.Tiles.Brick;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.sound.Sound;
 
 public class Bomber extends Entity {
     private int animate = 0;
@@ -27,6 +28,7 @@ public class Bomber extends Entity {
 
     private int timeABomb;
     private int countBomb;
+    public static int score = 0;
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
@@ -37,6 +39,7 @@ public class Bomber extends Entity {
         afterKill = 50;
         countBomb = 2;
         timeABomb = 0;
+        score = 0;
     }
 
     @Override
@@ -95,16 +98,16 @@ public class Bomber extends Entity {
             moving = true;
         }
         if (BombermanGame.right) {
-            BombermanGame.map.clearquai();
             dx = 1* speed;
             moving = true;
         }
         if (BombermanGame.space && timeBomb < 0) {
+            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\BOM_SET.wav");
             int xBom = (int) (x + Sprite.SCALED_SIZE / 2);
             int yBomb = (int) (y + Sprite.SCALED_SIZE / 2);
             if (!(BombermanGame.map.getBomb(xBom, yBomb) instanceof Bomb)) {
                 BombermanGame.map.addBomb(xBom,yBomb);
-                timeBomb = 20;
+                timeBomb = 120;
                 countBomb --;
                 if (countBomb == 0 && timeABomb < 0) {
                     timeABomb = 120;

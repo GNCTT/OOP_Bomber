@@ -7,7 +7,6 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class Conlon2 extends Enemy {
 
-    private int speed;
     private int index;
 
 

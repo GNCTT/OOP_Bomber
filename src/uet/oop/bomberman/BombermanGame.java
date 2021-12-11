@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import uet.oop.bomberman.Map.Map;
 import uet.oop.bomberman.entities.*;
@@ -33,6 +34,7 @@ public class BombermanGame extends Application {
 
     public static boolean up, down, right, left, space;
     public static Map map;
+    public static int stateGame;
 
 
     public static void main(String[] args) {
@@ -43,12 +45,13 @@ public class BombermanGame extends Application {
     public void start(Stage stage) {
 
         map = new Map(5);
+        stateGame = 1;
         map.createMap();
         System.out.println(map.getHeight() +" " + HEIGHT);
         HEIGHT = map.getHeight();
         WIDTH = map.getWidth();
         // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT + 30);
         gc = canvas.getGraphicsContext2D();
 
         // Tao root container
@@ -76,6 +79,8 @@ public class BombermanGame extends Application {
                         case LEFT:  left  = true; break;
                         case RIGHT: right  = true; break;
                         case SPACE: space = true; break;
+                        case ESCAPE: stateGame = 2; break;
+                        case A: stateGame = 1; break;
                     }
                 });
                 scene.setOnKeyReleased(event -> {
@@ -87,16 +92,19 @@ public class BombermanGame extends Application {
                         case SPACE: space = false; break;
                     }
                 });
-//                scene.setOnKeyTyped(event -> {
-//                    switch (event.getCode()) {
-//                        case SPACE: space = true; break;
-//                    }
-//                });
                 //de update nhan vat(toa do , hinh anh ...)
-                update();
-                // ve ra man hinh
-                render();
+                if (stateGame == 1) {
 
+                    update();
+                    // ve ra man hinh
+                    render();
+                }
+                else {
+//                    map.clearMap(gc);
+                    gc.clearRect(0, 0, Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+                    gc.drawImage(Sprite.conlon_right1.getFxImage(), 0, 0);
+                    pauseGame();
+                }
             }
         };
         timer.start();
@@ -104,12 +112,15 @@ public class BombermanGame extends Application {
         createMap();
     }
 
+    public void pauseGame() {
+        gc.fillText("hello", 50, 50);
+        gc.setFill(Color.RED);
+    }
+
     public void createMap() {
         WIDTH = map.getWidth();
         HEIGHT = map.getHeight();
     }
-
-
 
     public void update() {
         map.update();

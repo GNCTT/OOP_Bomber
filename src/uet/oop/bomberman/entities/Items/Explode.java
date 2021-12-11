@@ -63,7 +63,7 @@ public class Explode extends Entity {
             ((Bomber) a).setAlive();
         }
         if (a instanceof Enemy) {
-            ((Enemy) a).killed();
+            ((Enemy) a).setAlive();
         }
         if (a instanceof Bomb) {
             System.out.println("oooooooooo");

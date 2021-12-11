@@ -18,6 +18,8 @@ public abstract class Entity {
     protected int width;
     protected int height;
 
+    protected int point;
+
     protected Image img;
     protected boolean remove;
     protected boolean beDestroy;
@@ -31,6 +33,7 @@ public abstract class Entity {
         height = Sprite.SCALED_SIZE;
         remove = false;
         beDestroy = false;
+        point = 10;
     }
 
     public Entity(int x, int y) {
@@ -72,5 +75,8 @@ public abstract class Entity {
     public boolean intersects(Entity s)
     {
         return s.getBoundary().intersects( this.getBoundary() );
+    }
+    public int getPoint() {
+        return this.point;
     }
 }

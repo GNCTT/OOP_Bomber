@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Character.Bomber;
+import uet.oop.bomberman.entities.Enemy.Ballon2;
 import uet.oop.bomberman.entities.Enemy.Enemy;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Items.Bomb;
@@ -54,6 +55,9 @@ public class Brick extends Entity {
 
     @Override
     public boolean collide(Entity a) {
+        if (a instanceof Ballon2) {
+            return false;
+        }
         if (a instanceof Explode || a instanceof Bomb || a instanceof Bomber || a instanceof Enemy) {
             return true;
         }

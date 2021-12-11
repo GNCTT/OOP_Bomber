@@ -7,7 +7,6 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class Conma2 extends Enemy {
 
-    private int speed;
     private int index;
 
 
@@ -17,6 +16,7 @@ public class Conma2 extends Enemy {
         direction = 0;
         afterKill = 50;
         alive = true;
+        speed = 2;
     }
 
     @Override

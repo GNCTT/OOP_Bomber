@@ -1,7 +1,11 @@
 package uet.oop.bomberman.entities.Tiles;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Character.Bomber;
+import uet.oop.bomberman.entities.Enemy.Enemy;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.Items.Bomb;
 
 public class Portal extends Entity {
 
@@ -16,6 +20,17 @@ public class Portal extends Entity {
 
     @Override
     public boolean collide(Entity a) {
+        if (a instanceof Bomber) {
+            if (Bomber.score >= 40) {
+                BombermanGame.map.changeLevel();
+            }
+            else {
+                return true;
+            }
+        }
+        if (a instanceof Enemy) {
+            return true;
+        }
         return false;
     }
 

@@ -22,7 +22,7 @@ public class SpeedItem extends Entity {
     @Override
     public boolean collide(Entity a) {
         if (a instanceof Bomber) {
-            Sound.play("D:\\OOP-Dic\\OOP_Bomber\\res\\sound\\Item.wav");
+            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\Item.wav");
             this.remove = true;
             ((Bomber) a).setSpeed();
 //            BombermanGame.map.addObject(new Grass((int) (x / Sprite.SCALED_SIZE), (int) y / Sprite.SCALED_SIZE, Sprite.grass.getFxImage()));
