@@ -14,6 +14,9 @@ public class Conlon2 extends Enemy {
     public Conlon2(int x, int y, Image img) {
         super(x, y, img);
         index = 0;
+        direction = 0;
+        afterKill = 50;
+        alive = true;
     }
 
     @Override
@@ -36,11 +39,21 @@ public class Conlon2 extends Enemy {
 
                 break;
             default:
-                img = Sprite.conlon_left1.getFxImage();
+                img = Sprite.conlon_dead.getFxImage();
                 break;
         }
     }
 
+    @Override
+    public void killed() {
+        if (afterKill > 0) {
+            afterKill --;
+            img = Sprite.movingSprite(Sprite.conlon_dead, Sprite.mob_dead1, Sprite.mob_dead2, animate, 20).getFxImage();
+        }
+        else
+            remove = true;
+
+    }
 //    @Override
 //    public boolean collide(Entity a) {
 //        if (a instanceof Bomber) {

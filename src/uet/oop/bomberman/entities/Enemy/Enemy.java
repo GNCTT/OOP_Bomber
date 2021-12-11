@@ -19,12 +19,17 @@ public abstract class Enemy extends Entity {
     protected int step;
     protected int direction;
     private final int maxAnimate = 7500;
+    protected int afterKill;
+
+    protected boolean die;
     public Enemy(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
         animate = 0;
         step = 160;
         direction = 0;
         speed = Sprite.SCALED_SIZE / 32;
+        afterKill = 100;
+        die = false;
     }
 
     public Enemy(int x, int y, Image img, int animate) {
@@ -45,15 +50,29 @@ public abstract class Enemy extends Entity {
 
     public void update() {
         animate();
-        if ( step <= 0 ) {
-            step = 160;
-            Random rand = new Random();
-            direction = rand.nextInt(4);
+        if (alive) {
+            if ( step <= 0 ) {
+                step = 160;
+                Random rand = new Random();
+                direction = rand.nextInt(4);
+            }
+            else {
+                step --;
+                move();
+            }
         }
         else {
-            step --;
-            move();
+            killed();
         }
+//        if ( step <= 0 ) {
+//            step = 160;
+//            Random rand = new Random();
+//            direction = rand.nextInt(4);
+//        }
+//        else {
+//            step --;
+//            move();
+//        }
     }
 
     private void move() {
@@ -198,9 +217,13 @@ public abstract class Enemy extends Entity {
     }
 
     public void killed() {
-        img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, animate, 20).getFxImage();
+
+    }
+
+    public void setAlive() {
         alive = false;
     }
+
 
     public boolean collide(Entity a) {
         if ( a instanceof Bomber) {

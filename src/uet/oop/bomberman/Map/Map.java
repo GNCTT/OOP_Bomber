@@ -306,5 +306,13 @@ public class Map {
         createMap();
     }
 
+    public void clearquai() {
+        for (int i = 0; i < entities.size(); i++) {
+            if (entities.get(i) instanceof Enemy) {
+                ((Enemy) entities.get(i)).setAlive();
+            }
+        }
+    }
+
 
 }

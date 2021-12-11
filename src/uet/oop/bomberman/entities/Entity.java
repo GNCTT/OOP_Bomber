@@ -52,4 +52,5 @@ public abstract class Entity {
     public void setBeDestroy(boolean beDestroy) {
         this.beDestroy = beDestroy;
     }
+    public void killed() {}
 }
