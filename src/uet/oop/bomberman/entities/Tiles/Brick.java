@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities.Tiles;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Character.Bomber;
@@ -41,6 +42,10 @@ public class Brick extends Entity {
                 remove = true;
             }
         }
+    }
+
+    public void render (GraphicsContext gc) {
+        gc.drawImage(img, x, y);
     }
 
     public void explode() {

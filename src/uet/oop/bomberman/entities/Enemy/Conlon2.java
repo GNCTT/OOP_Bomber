@@ -40,11 +40,10 @@ public class Conlon2 extends Enemy {
                 break;
         }
     }
-
-//    @Override
+//
 //    public boolean collide(Entity a) {
-//        if (a instanceof Bomber) {
-//            return true;
+//        if ( a instanceof Bomber) {
+//            ((Bomber) a).setAlive();
 //        }
 //        return false;
 //    }

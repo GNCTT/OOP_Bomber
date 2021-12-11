@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import uet.oop.bomberman.Map.Map;
@@ -29,8 +30,6 @@ public class BombermanGame extends Application {
 
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
 
     public static boolean up, down, right, left, space;
     public static Map map;
@@ -63,7 +62,7 @@ public class BombermanGame extends Application {
         stage.setScene(scene);
         stage.show();
 
-        Sound.play("D:\\OOP-Dic\\OOP_Bomber\\res\\sound\\soundtrack.wav");
+//        Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\soundtrack.wav");
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -88,6 +87,11 @@ public class BombermanGame extends Application {
                         case SPACE: space = false; break;
                     }
                 });
+//                scene.setOnKeyTyped(event -> {
+//                    switch (event.getCode()) {
+//                        case SPACE: space = true; break;
+//                    }
+//                });
                 //de update nhan vat(toa do , hinh anh ...)
                 update();
                 // ve ra man hinh

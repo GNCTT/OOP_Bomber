@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 
 public class Map {
@@ -31,6 +32,7 @@ public class Map {
     private ArrayList<Entity> stillObjects = new ArrayList<>();
 
     public static ArrayList<Entity> explodes = new ArrayList<>();
+    public static ArrayList<Entity> enemies = new ArrayList<>();
 
     public Map(int level) {
         this.level = level;
@@ -105,21 +107,31 @@ public class Map {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; ++j) {
+                Entity enemy;
                 switch (_lineTiles[i].charAt(j)) {
                     case '1':
-                        entities.add(new Ballon2(j, i, Sprite.balloom_left1.getFxImage()));
+                        enemy = new Ballon2(j, i, Sprite.balloom_left1.getFxImage());
+//                        entities.add(new Ballon2(j, i, Sprite.balloom_left1.getFxImage()));
+                        enemies.add(enemy);
                         break;
                     case '3':
-                        entities.add(new Doll2(j, i, Sprite.doll_right1.getFxImage()));
+                        enemy = new Doll2(j, i, Sprite.doll_right1.getFxImage());
+//                        entities.add(new Doll2(j, i, Sprite.doll_right1.getFxImage()));
+                        enemies.add(enemy);
                         break;
                     case '4':
-                        entities.add(new Kondoria2(j, i, Sprite.kondoria_right1.getFxImage()));
+                        enemy = new Kondoria2(j, i, Sprite.kondoria_right1.getFxImage());
+//                        entities.add(new Kondoria2(j, i, Sprite.kondoria_right1.getFxImage()));
+                        enemies.add(enemy);
                         break;
                     case '6':
-                        entities.add(new Conma2(j, i, Sprite.conma_right1.getFxImage()));
+                        enemy = new Conma2(j, i, Sprite.conma_right1.getFxImage());
+//                        entities.add(new Conma2(j, i, Sprite.conma_right1.getFxImage()));
+                        enemies.add(enemy);
                         break;
                     case '7':
-                        entities.add(new Conlon2(j, i, Sprite.conlon_right1.getFxImage()));
+                        enemy = new Conlon2(j, i, Sprite.conlon_right1.getFxImage());
+                        enemies.add(enemy);
                         break;
                     case '*':
                     case 's':
@@ -168,6 +180,19 @@ public class Map {
         entities.add(new Bomb((int) x / Sprite.SCALED_SIZE,(int) y / Sprite.SCALED_SIZE , Sprite.bomb.getFxImage()));
     }
 
+    public Entity getBomb(int x, int y) {
+        int dx = (int) x / Sprite.SCALED_SIZE;
+        dx = dx * Sprite.SCALED_SIZE;
+        int dy = (int) x / Sprite.SCALED_SIZE;
+        dy = dy * Sprite.SCALED_SIZE;
+        for (int i = 0; i < entities.size(); i++) {
+            if (entities.get(i) instanceof Bomb && entities.get(i).getX() == dx && entities.get(i).getY() == dy) {
+                return entities.get(i);
+            }
+        }
+        return null;
+    }
+
     public void removeEntity(Entity a) {
         entities.remove(a);
     }
@@ -186,6 +211,39 @@ public class Map {
         if (getExplode(i, j) != null) {
             System.out.println("oo");
             return getExplode(i, j);
+        }
+//        Iterator<Entity> entityIterator = entities.iterator();
+//        while ( entityIterator.hasNext() )
+//        {
+//            Entity entity = entityIterator.next();
+//            System.out.println(entity);
+//            if ( a.intersects(entity) )
+//            {
+//                System.out.println("ok");
+//                return entity;
+//            }
+//        }
+        for (int id = 0; id < entities.size(); id++) {
+            if (entities.get(id).getX() == i && entities.get(id).getY() == j) {
+                return entities.get(id);
+            }
+        }
+        return null;
+    }
+
+    public Entity getEntity(int i, int j, Entity a) {
+        i *= Sprite.SCALED_SIZE;
+        j *= Sprite.SCALED_SIZE;
+        if (getExplode(i, j) != null) {
+            return getExplode(i, j);
+        }
+        Iterator<Entity> entityIterator = enemies.iterator();
+        while (entityIterator.hasNext()) {
+            Entity entity = entityIterator.next();
+            System.out.println(entity);
+            if (!(entity instanceof Bomber) && a.intersects(entity)) {
+                return entity;
+            }
         }
         for (int id = 0; id < entities.size(); id++) {
             if (entities.get(id).getX() == i && entities.get(id).getY() == j) {
@@ -263,6 +321,20 @@ public class Map {
                 stillObjects.get(i).update();
             }
         }
+        for (int i = 0; i < explodes.size(); i++) {
+            if (explodes.get(i).isRemove()) {
+                explodes.remove(i);
+            }else {
+                explodes.get(i).update();
+            }
+        }
+        for (int i = 0; i < enemies.size();  i++) {
+            if (enemies.get(i).isRemove()) {
+                enemies.remove(i);
+            } else {
+                enemies.get(i).update();
+            }
+        }
         for (int i = 0; i < entities.size(); i++) {
             if (entities.get(i).isRemove()) {
                 entities.remove(i);
@@ -285,9 +357,16 @@ public class Map {
         for (int i = 0; i < stillObjects.size(); i++) {
             stillObjects.get(i).render(gc);
         }
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).render(gc);
+        }
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).render(gc);
+        }
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).render(gc);
         }
+
 
     }
 

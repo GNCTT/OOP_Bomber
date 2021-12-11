@@ -24,16 +24,19 @@ public class Bomber extends Entity {
     private boolean checkSpeed;
     private int afterKill;
 
+
+    private int timeABomb;
     private int countBomb;
 
     public Bomber(int x, int y, Image img) {
-        super( x, y, img);
+        super(x, y, img);
         speed = Sprite.SCALED_SIZE / 16;
         alive = true;
         timePower = 200;
         checkSpeed = false;
         afterKill = 50;
         countBomb = 2;
+        timeABomb = 0;
     }
 
     @Override
@@ -43,8 +46,20 @@ public class Bomber extends Entity {
         } else {
             animate = 0;
         }
-        if (timeBomb < -7500) timeBomb = 0;
+        if (timeBomb < -10) {
+            timeBomb = 0;
+//            countBomb = 1;
+        }
         else timeBomb --;
+        if (timeABomb < -7500) {
+            timeABomb = 0;
+            countBomb = 2;
+
+        } else {
+            timeABomb --;
+        }
+
+        System.out.println("bombx:" + countBomb);
         input();
         if (checkSpeed && timePower >= 0) {
             speed = 1 + Sprite.SCALED_SIZE / 16;
@@ -84,10 +99,18 @@ public class Bomber extends Entity {
             moving = true;
         }
         if (BombermanGame.space && timeBomb < 0) {
-            countBomb --;
+            int xBom = (int) (x + Sprite.SCALED_SIZE / 2);
+            int yBomb = (int) (y + Sprite.SCALED_SIZE / 2);
+            if (!(BombermanGame.map.getBomb(xBom, yBomb) instanceof Bomb)) {
+                BombermanGame.map.addBomb(xBom,yBomb);
+                timeBomb = 20;
+                countBomb --;
+                if (countBomb == 0 && timeABomb < 0) {
+                    timeABomb = 120;
+                }
+            }
 //            Entity a = new Bomber(x, y, Sprite.movingSprite(Sprite.bomb_1, Sprite.bomb_2, animate, 20).getFxImage());
-            BombermanGame.map.addBomb((int) (x + Sprite.SCALED_SIZE / 2),(int) (y + Sprite.SCALED_SIZE / 2));
-            timeBomb = 80;
+
         }
         move(dx, dy);
         chooseSprite(direction);
@@ -167,10 +190,10 @@ public class Bomber extends Entity {
         Entity o2 = BombermanGame.map.getObjectnotGrass(x1, y2);
         Entity o3 = BombermanGame.map.getObjectnotGrass(x2, y1);
         Entity o4 = BombermanGame.map.getObjectnotGrass(x2, y2);
-        Entity b1 = BombermanGame.map.getEntity(x1, y1);
-        Entity b2 = BombermanGame.map.getEntity(x1, y2);
-        Entity b3 = BombermanGame.map.getEntity(x2, y1);
-        Entity b4 = BombermanGame.map.getEntity(x2, y2);
+        Entity b1 = BombermanGame.map.getEntity(x1, y1, this);
+        Entity b2 = BombermanGame.map.getEntity(x1, y2, this);
+        Entity b3 = BombermanGame.map.getEntity(x2, y1, this);
+        Entity b4 = BombermanGame.map.getEntity(x2, y2, this);
         if (b1 != null) {
             if (b1.collide(this)) {
                 return false;
@@ -248,6 +271,10 @@ public class Bomber extends Entity {
 
     public void setSpeed() {
         checkSpeed = true;
+    }
+
+    public void setCountBomb(int countBomb) {
+        this.countBomb = countBomb;
     }
 
     public void setAlive() {

@@ -42,10 +42,9 @@ public class Ballon2 extends Enemy {
         }
     }
 
-//    @Override
 //    public boolean collide(Entity a) {
-//        if (a instanceof Bomber) {
-//            return true;
+//        if ( a instanceof Bomber) {
+//            ((Bomber) a).setAlive();
 //        }
 //        return false;
 //    }

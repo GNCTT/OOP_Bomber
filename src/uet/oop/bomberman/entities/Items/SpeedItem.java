@@ -22,7 +22,7 @@ public class SpeedItem extends Entity {
     @Override
     public boolean collide(Entity a) {
         if (a instanceof Bomber) {
-            Sound.play("D:\\OOP-Dic\\OOP_Bomber\\res\\sound\\Item.wav");
+            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\Item.wav");
             System.out.println("hello");
             this.remove = true;
             ((Bomber) a).setSpeed();

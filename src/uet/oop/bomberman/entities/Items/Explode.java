@@ -66,6 +66,7 @@ public class Explode extends Entity {
             ((Enemy) a).killed();
         }
         if (a instanceof Bomb) {
+            System.out.println("oooooooooo");
             ((Bomb) a).explode();
         }
         return false;

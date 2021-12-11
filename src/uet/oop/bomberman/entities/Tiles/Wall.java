@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities.Tiles;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Enemy.Enemy;
@@ -15,6 +16,7 @@ public class Wall extends Entity {
     public void update() {
 
     }
+
 
     @Override
     public boolean collide(Entity a) {

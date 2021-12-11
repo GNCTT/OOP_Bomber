@@ -158,9 +158,6 @@ public abstract class Enemy extends Entity {
 //        System.out.println(myround(dx) + " " + myround2(dx));
         return true;
     }
-    private boolean canMove() {
-        return true;
-    }
 
     /** Góc trái trên. */
     private int myround(double x) {

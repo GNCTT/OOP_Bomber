@@ -26,8 +26,10 @@ public class Bomb extends Entity {
         if (animate < 7500) {
             animate ++;
         } else animate = 0;
+        int dx = (int) x / Sprite.SCALED_SIZE;
+        int dy = (int) y / Sprite.SCALED_SIZE;
         img = Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, animate, 60).getFxImage();
-        if (countTime < 0) {
+        if (countTime < 0 || BombermanGame.map.getEntity(dx, dy) instanceof Explode) {
             explode();
         }
     }
@@ -84,7 +86,7 @@ public class Bomb extends Entity {
 //            explodes.add(new Explode(dx + 1, dy, Sprite.movingSprite(Sprite.explosion_horizontal_right_last, Sprite.explosion_horizontal_right_last1,Sprite.explosion_horizontal_right_last2, animate, 20).getFxImage()));
 
 
-        BombermanGame.map.addAllEntities(explodes);
+        BombermanGame.map.addAllExplodes(explodes);
     }
 
 }
