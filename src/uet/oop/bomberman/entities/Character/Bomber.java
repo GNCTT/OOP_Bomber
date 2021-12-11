@@ -23,10 +23,22 @@ public class Bomber extends Entity {
     private int timePower;
     private boolean checkSpeed;
     private int afterKill;
-
+    private int checkAlive = 1;
 
     private int timeABomb;
     private int countBomb;
+
+    public void setCheckAlive(int checkAlive) {
+        this.checkAlive = checkAlive;
+    }
+
+    public int getCheckAlive() {
+        return checkAlive;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);

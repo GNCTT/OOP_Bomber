@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities.Items;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Enemy.Enemy;
@@ -8,6 +9,8 @@ import uet.oop.bomberman.entities.Tiles.Brick;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Explode extends Entity {
+
+    private GraphicsContext gc;
     private int explodeTime;
     private int animate;
     private int dir;
@@ -61,6 +64,7 @@ public class Explode extends Entity {
         }
         if (a instanceof Bomber) {
             ((Bomber) a).setAlive();
+
         }
         if (a instanceof Enemy) {
             ((Enemy) a).killed();

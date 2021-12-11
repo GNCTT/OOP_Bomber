@@ -6,11 +6,17 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import sun.font.FontFamily;
+import sun.font.SunFontManager;
 import uet.oop.bomberman.Map.Map;
 import uet.oop.bomberman.entities.*;
+import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.IOException;
@@ -33,7 +39,8 @@ public class BombermanGame extends Application {
 
     public static boolean up, down, right, left, space;
     public static Map map;
-
+    public int State = 1 ;
+    public int checkAlive = 1;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -76,6 +83,9 @@ public class BombermanGame extends Application {
                         case LEFT:  left  = true; break;
                         case RIGHT: right  = true; break;
                         case SPACE: space = true; break;
+                        case ESCAPE : State = 0;break;
+                        case ENTER: State = 1;break;
+                        case A : checkAlive = 1;break;
                     }
                 });
                 scene.setOnKeyReleased(event -> {
@@ -96,12 +106,39 @@ public class BombermanGame extends Application {
                 update();
                 // ve ra man hinh
                 render();
-
+                if( State == 0 && checkAlive == 1){
+                    pauseGame();
+                }
+                for (int i = 0; i < map.getEntities().size(); i++) {
+                        if (map.getEntities().get(i) instanceof Bomber) {
+                            if (((Bomber) map.getEntities().get(i)).isAlive() == false) {
+                                checkAlive = 0;
+                            }
+                        }
+                }
+                if(checkAlive == 0) {
+                    Game_Over();
+                }
             }
         };
         timer.start();
 
         createMap();
+    }
+
+    public void pauseGame() {
+        gc.clearRect(0,0,Sprite.SCALED_SIZE*WIDTH,Sprite.SCALED_SIZE*HEIGHT);
+        gc.drawImage(new Image("textures/1686792-pause_menu.jpg"),0,0, Sprite.SCALED_SIZE*WIDTH,Sprite.SCALED_SIZE*HEIGHT);
+        gc.setFont(new Font("Family",25));
+        gc.fillText("nhấn enter để chơi tiếp ", 300, 400);
+        gc.setFill(Color.GREEN);
+    };
+    public void Game_Over() {
+        gc.clearRect(0,0,Sprite.SCALED_SIZE*WIDTH,Sprite.SCALED_SIZE*HEIGHT);
+        gc.drawImage(new Image("textures/GameOver.jpg"),0,0, Sprite.SCALED_SIZE*WIDTH,Sprite.SCALED_SIZE*HEIGHT);
+        gc.setFont(new Font("Family",25));
+        gc.fillText("nhấn A để chơi lai ", 400, 400);
+        gc.setFill(Color.GREEN);
     }
 
     public void createMap() {
