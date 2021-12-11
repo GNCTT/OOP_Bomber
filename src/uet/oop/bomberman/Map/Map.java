@@ -301,10 +301,6 @@ public class Map {
     public void update() {
         for (int i = 0; i < stillObjects.size(); i++) {
             if (stillObjects.get(i).isRemove()) {
-//                int dx = stillObjects.get(i).getX() / Sprite.SCALED_SIZE;
-//                int dy = stillObjects.get(i).getY() / Sprite.SCALED_SIZE;
-//                Entity a = new Grass(stillObjects.get(i).getX() / Sprite.SCALED_SIZE, stillObjects.get(i).getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
-//                stillObjects.add(a);
                 stillObjects.remove(i);
 
             }
@@ -382,6 +378,17 @@ public class Map {
         }
         entities = new ArrayList<>();
         stillObjects = new ArrayList<>();
+        enemies = new ArrayList<>();
+        explodes = new ArrayList<>();
+        createMap();
+    }
+
+    public void replayGame() {
+        level = 1;
+        enemies = new ArrayList<>();
+        stillObjects = new ArrayList<>();
+        entities = new ArrayList<>();
+        explodes = new ArrayList<>();
         createMap();
     }
 

@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.Items;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Enemy.Enemy;
 import uet.oop.bomberman.entities.Entity;
@@ -61,12 +62,12 @@ public class Explode extends Entity {
         }
         if (a instanceof Bomber) {
             ((Bomber) a).setAlive();
+            BombermanGame.State = 3;
         }
         if (a instanceof Enemy) {
             ((Enemy) a).setAlive();
         }
         if (a instanceof Bomb) {
-            System.out.println("oooooooooo");
             ((Bomb) a).explode();
         }
         return false;

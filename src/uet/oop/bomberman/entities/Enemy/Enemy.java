@@ -215,6 +215,7 @@ public abstract class Enemy extends Entity {
     public boolean collide(Entity a) {
         if ( a instanceof Bomber) {
             ((Bomber) a).setAlive();
+            BombermanGame.State = 3;
         }
 //        if (a instanceof Enemy) {
 //            return true;

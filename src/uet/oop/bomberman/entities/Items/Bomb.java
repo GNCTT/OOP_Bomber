@@ -15,11 +15,20 @@ import java.util.ArrayList;
 public class Bomb extends Entity {
     private int animate = 0;
     private int countTime;
+    private int type;
     private ArrayList<Entity> explodes;
     public Bomb(int x, int y, Image img) {
         super(x, y, img);
         countTime = 120;
         explodes = new ArrayList<>();
+        type = 0;
+    }
+
+    public Bomb(int x, int y, Image img, int type) {
+        super(x, y, img);
+        countTime = 120;
+        explodes = new ArrayList<>();
+        this.type = type;
     }
 
     @Override
