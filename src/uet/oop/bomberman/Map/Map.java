@@ -38,6 +38,10 @@ public class Map {
         this.level = level;
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     public void readMap() {
         String filename = "res/levels/Level" + level + ".txt";
 
@@ -370,7 +374,7 @@ public class Map {
 
     }
 
-    private void clearMap(GraphicsContext gc) {
+    public void clearMap(GraphicsContext gc) {
         gc.clearRect(0, 0, width, height);
     }
 

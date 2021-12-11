@@ -41,89 +41,88 @@ public class BombermanGame extends Application {
     public static Map map;
     public int State = 1 ;
     public int checkAlive = 1;
-
+    public int startnew = 0;
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
     }
 
     @Override
     public void start(Stage stage) {
+            map = new Map(1);
+            map.createMap();
+            System.out.println(map.getHeight() + " " + HEIGHT);
+            HEIGHT = map.getHeight();
+            WIDTH = map.getWidth();
+            // Tao Canvas
+            canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+            gc = canvas.getGraphicsContext2D();
 
-        map = new Map(5);
-        map.createMap();
-        System.out.println(map.getHeight() +" " + HEIGHT);
-        HEIGHT = map.getHeight();
-        WIDTH = map.getWidth();
-        // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
-        gc = canvas.getGraphicsContext2D();
+            // Tao root container
+            Group root = new Group();
+            root.getChildren().add(canvas);
 
-        // Tao root container
-        Group root = new Group();
-        root.getChildren().add(canvas);
+            // Tao scene
+            Scene scene = new Scene(root);
 
-        // Tao scene
-        Scene scene = new Scene(root);
-
-        // Them scene vao stage
-        stage.setScene(scene);
-        stage.show();
+            // Them scene vao stage
+            stage.setScene(scene);
+            stage.show();
 
 //        Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\soundtrack.wav");
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
+            AnimationTimer timer = new AnimationTimer() {
+                @Override
+                public void handle(long l) {
 
-                //vong lap cua game day
-                //input
-                scene.setOnKeyPressed(event -> {
-                    switch (event.getCode()) {
-                        case UP:    up = true; break;
-                        case DOWN:  down = true; break;
-                        case LEFT:  left  = true; break;
-                        case RIGHT: right  = true; break;
-                        case SPACE: space = true; break;
-                        case ESCAPE : State = 0;break;
-                        case ENTER: State = 1;break;
-                        case A : checkAlive = 1;break;
-                    }
-                });
-                scene.setOnKeyReleased(event -> {
-                    switch (event.getCode()) {
-                        case UP:    up = false; break;
-                        case DOWN:  down = false; break;
-                        case LEFT:  left  = false; break;
-                        case RIGHT: right  = false; break;
-                        case SPACE: space = false; break;
-                    }
-                });
+                    //vong lap cua game day
+                    //input
+                    scene.setOnKeyPressed(event -> {
+                        switch (event.getCode()) {
+                            case UP: up = true;break;
+                            case DOWN: down = true;break;
+                            case LEFT: left = true;break;
+                            case RIGHT: right = true;break;
+                            case SPACE: space = true;break;
+                            case ESCAPE: State = 0;break;
+                            case ENTER: State = 1;break;
+                            case A: startnew = 1;break;
+                        }
+                    });
+                    scene.setOnKeyReleased(event -> {
+                        switch (event.getCode()) {
+                            case UP: up = false;break;
+                            case DOWN: down = false;break;
+                            case LEFT: left = false;break;
+                            case RIGHT: right = false;break;
+                            case SPACE: space = false;break;
+                        }
+                    });
 //                scene.setOnKeyTyped(event -> {
 //                    switch (event.getCode()) {
 //                        case SPACE: space = true; break;
 //                    }
 //                });
-                //de update nhan vat(toa do , hinh anh ...)
-                update();
-                // ve ra man hinh
-                render();
-                if( State == 0 && checkAlive == 1){
-                    pauseGame();
-                }
-                for (int i = 0; i < map.getEntities().size(); i++) {
+                    //de update nhan vat(toa do , hinh anh ...)
+                    update();
+                    // ve ra man hinh
+                    render();
+                    if (State == 0 && checkAlive == 1) {
+                        pauseGame();
+                    }
+                    for (int i = 0; i < map.getEntities().size(); i++) {
                         if (map.getEntities().get(i) instanceof Bomber) {
                             if (((Bomber) map.getEntities().get(i)).isAlive() == false) {
                                 checkAlive = 0;
                             }
                         }
+                    }
+                    if (checkAlive == 0) {
+                        Game_Over();
+                    }
                 }
-                if(checkAlive == 0) {
-                    Game_Over();
-                }
-            }
-        };
-        timer.start();
+            };
 
-        createMap();
+            timer.start();
+            createMap();
     }
 
     public void pauseGame() {
