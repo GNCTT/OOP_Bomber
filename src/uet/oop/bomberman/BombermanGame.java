@@ -46,6 +46,7 @@ public class BombermanGame extends Application {
     public int checkAlive = 1;
     public int startnew = 0;
     public static void main(String[] args) {
+//        Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\soundtrack.wav");
         Application.launch(BombermanGame.class);
     }
 
@@ -68,6 +69,7 @@ public class BombermanGame extends Application {
 
         // Tao scene
         Scene scene = new Scene(root);
+//        Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\themesound.wav");
 
         // Them scene vao stage
         stage.setScene(scene);
@@ -167,7 +169,7 @@ public class BombermanGame extends Application {
 
     public void StartGame() {
         gc.clearRect(0, 0, Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
-        gc.drawImage(new Image("/textures/Startgame.png"), 0, 0, Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        gc.drawImage(new Image("/textures/startgame.jpg"), 0, 0, Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc.setFont(new Font("Family",25));
         gc.fillText("nhấn F để vào game ", 370, 400);
         gc.setFill(Color.GREEN);
