@@ -71,7 +71,6 @@ public class Explode extends Entity {
         }
         if (a instanceof Bomber) {
             ((Bomber) a).setAlive();
-            BombermanGame.State = 3;
         }
         if (a instanceof Enemy) {
             ((Enemy) a).setAlive();

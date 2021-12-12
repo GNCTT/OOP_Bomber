@@ -167,7 +167,7 @@ public class BombermanGame extends Application {
 
     public void StartGame() {
         gc.clearRect(0, 0, Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
-        gc.drawImage(new Image("/textures/GameOver.jpg"), 0, 0, Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        gc.drawImage(new Image("/textures/Startgame.png"), 0, 0, Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc.setFont(new Font("Family",25));
         gc.fillText("nhấn F để vào game ", 370, 400);
         gc.setFill(Color.GREEN);

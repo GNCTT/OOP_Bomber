@@ -89,19 +89,23 @@ public class Bomber extends Entity {
         int dx = 0, dy = 0;
         if (BombermanGame.up) {
             dy -= 1 * speed;
+//            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\SFX\\verticalmove.wav");
             moving = true;
         }
         if (BombermanGame.down) {
             dy = 1 * speed;
             moving = true;
+//            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\SFX\\verticalmove.wav");
         }
         if (BombermanGame.left) {
             dx = -1 * speed;
             moving = true;
+//            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\SFX\\horizonalmove.wav");
         }
         if (BombermanGame.right) {
             dx = 1* speed;
             moving = true;
+//            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\AA126_11.wav");
         }
         System.out.println(timeFlame);
         if (flame) {
@@ -317,8 +321,10 @@ public class Bomber extends Entity {
         if (afterKill >= 0) {
             afterKill--;
             img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, animate, 20).getFxImage();
+            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\endgame3.wav");
         } else {
             remove = true;
+            BombermanGame.State = 3;
         }
     }
 
