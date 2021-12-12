@@ -24,7 +24,8 @@ public class Bomber extends Entity {
     private int timePower;
     private boolean checkSpeed;
     private int afterKill;
-
+    private boolean flame;
+    private int timeFlame;
 
     private int timeABomb;
     private int countBomb;
@@ -40,6 +41,8 @@ public class Bomber extends Entity {
         countBomb = 2;
         timeABomb = 0;
         score = 0;
+        flame = false;
+        timeFlame = 400;
     }
 
     @Override
@@ -62,7 +65,6 @@ public class Bomber extends Entity {
             timeABomb --;
         }
 
-        System.out.println("bombx:" + countBomb);
         input();
         if (checkSpeed && timePower >= 0) {
             speed = 1 + Sprite.SCALED_SIZE / 16;
@@ -101,20 +103,45 @@ public class Bomber extends Entity {
             dx = 1* speed;
             moving = true;
         }
-        if (BombermanGame.space && timeBomb < 0) {
-            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\BOM_SET.wav");
-            int xBom = (int) (x + Sprite.SCALED_SIZE / 2);
-            int yBomb = (int) (y + Sprite.SCALED_SIZE / 2);
-            if (!(BombermanGame.map.getBomb(xBom, yBomb) instanceof Bomb)) {
-                BombermanGame.map.addBomb(xBom,yBomb);
-                timeBomb = 120;
-                countBomb --;
-                if (countBomb == 0 && timeABomb < 0) {
-                    timeABomb = 120;
+        System.out.println(timeFlame);
+        if (flame) {
+            timeFlame--;
+            if (BombermanGame.space && timeBomb < 0) {
+                Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\BOM_SET.wav");
+                int xBom = (int) (x + Sprite.SCALED_SIZE / 2);
+                int yBomb = (int) (y + Sprite.SCALED_SIZE / 2);
+
+                if (!(BombermanGame.map.getBomb(xBom, yBomb) instanceof Bomb)) {
+                    BombermanGame.map.addBomb2(xBom, yBomb);
+                    timeBomb = 120;
+                    countBomb--;
+                    if (countBomb == 0 && timeABomb < 0) {
+                        timeABomb = 120;
+                    }
                 }
-            }
+                if (timeFlame < 0) {
+                    flame = false;
+                    timeFlame = 120;
+                }
+
 //            Entity a = new Bomber(x, y, Sprite.movingSprite(Sprite.bomb_1, Sprite.bomb_2, animate, 20).getFxImage());
 
+            }
+        }
+        else {
+            if (BombermanGame.space && timeBomb < 0) {
+                Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\BOM_SET.wav");
+                int xBom = (int) (x + Sprite.SCALED_SIZE / 2);
+                int yBomb = (int) (y + Sprite.SCALED_SIZE / 2);
+                if (!(BombermanGame.map.getBomb(xBom, yBomb) instanceof Bomb)) {
+                    BombermanGame.map.addBomb(xBom, yBomb);
+                    timeBomb = 120;
+                    countBomb--;
+                    if (countBomb == 0 && timeABomb < 0) {
+                        timeABomb = 120;
+                    }
+                }
+            }
         }
         move(dx, dy);
         chooseSprite(direction);
@@ -141,9 +168,31 @@ public class Bomber extends Entity {
         if (dx == 0 && dy == 0) {
             direction = -1;
         }
+
         if (canMove(dx, dy)) {
             x += dx;
             y += dy;
+        }
+        else {
+            if ((x + dx) % 32 > 20 && (direction == 0 || direction == 2)) {
+                int r = 32 - ((x + dx) % 32);
+                x = x + dx + r;
+            }
+
+            if ((y + dy) % 32 > 20 && (direction == 1 || direction == 3)) {
+                int r = 32 - ((y + dy) % 32);
+                y = y + dy + r;
+            }
+
+            if ((x + dx) % 32 < 10 && (direction == 0 || direction == 2)) {
+                int r = (x + dx) % 32;
+                x = x + dx - r;
+            }
+
+            if ((y + dy) % 32 < 10 && (direction == 1 || direction == 3)) {
+                int r = (y + dy) % 32;
+                y = y + dy - r;
+            }
         }
     }
 
@@ -283,5 +332,9 @@ public class Bomber extends Entity {
 
     public void setAlive() {
         alive = false;
+    }
+
+    public void setFlame() {
+        flame = true;
     }
 }

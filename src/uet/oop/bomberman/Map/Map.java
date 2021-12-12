@@ -9,6 +9,7 @@ import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Enemy.*;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Items.Bomb;
+import uet.oop.bomberman.entities.Items.Flame;
 import uet.oop.bomberman.entities.Items.SpeedItem;
 import uet.oop.bomberman.entities.Tiles.Brick;
 import uet.oop.bomberman.entities.Tiles.Grass;
@@ -99,7 +100,9 @@ public class Map {
                     case 's':
                         stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
                         stillObjects.add(new SpeedItem(j, i, Sprite.powerup_speed.getFxImage()));
-
+                    case 'f':
+                        stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
+                        stillObjects.add(new Flame(j, i, Sprite.powerup_flames.getFxImage()));
 //                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
                     default:
@@ -142,6 +145,7 @@ public class Map {
                     case 'x':
                         entities.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
+
                     case 'p':
                         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
                         entities.add(bomberman);
@@ -187,6 +191,10 @@ public class Map {
 
     public void addBomb(int x, int y) {
         entities.add(new Bomb((int) x / Sprite.SCALED_SIZE,(int) y / Sprite.SCALED_SIZE , Sprite.bomb.getFxImage()));
+    }
+
+    public void addBomb2(int x, int y) {
+        entities.add(new Bomb((int) x / Sprite.SCALED_SIZE,(int) y / Sprite.SCALED_SIZE , Sprite.bomb.getFxImage(), 1));
     }
 
     public Entity getBomb(int x, int y) {
