@@ -29,6 +29,8 @@ public class Bomber extends Entity {
 
     private int timeABomb;
     private int countBomb;
+    private boolean multibomb;
+    private int timeMultibomb;
     public static int score = 0;
 
     public Bomber(int x, int y, Image img) {
@@ -43,6 +45,8 @@ public class Bomber extends Entity {
         score = 0;
         flame = false;
         timeFlame = 400;
+        multibomb = false;
+        timeMultibomb = 800;
     }
 
     @Override
@@ -57,13 +61,13 @@ public class Bomber extends Entity {
 //            countBomb = 1;
         }
         else timeBomb --;
-        if (timeABomb < -7500) {
-            timeABomb = 0;
-            countBomb = 2;
-
-        } else {
-            timeABomb --;
-        }
+//        if (timeABomb < -7500) {
+//            timeABomb = 0;
+//            countBomb = 2;
+//
+//        } else {
+//            timeABomb --;
+//        }
 
         input();
         if (checkSpeed && timePower >= 0) {
@@ -108,6 +112,13 @@ public class Bomber extends Entity {
 //            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\AA126_11.wav");
         }
         System.out.println(timeFlame);
+        if (multibomb) {
+            timeMultibomb--;
+            if (timeMultibomb < 0) {
+                multibomb = false;
+                timeMultibomb = 800;
+            }
+        }
         if (flame) {
             timeFlame--;
             if (BombermanGame.space && timeBomb < 0) {
@@ -117,7 +128,13 @@ public class Bomber extends Entity {
 
                 if (!(BombermanGame.map.getBomb(xBom, yBomb) instanceof Bomb)) {
                     BombermanGame.map.addBomb2(xBom, yBomb);
-                    timeBomb = 120;
+//                    timeBomb = timebombb;
+                    if (multibomb) {
+                        timeBomb = 40;
+                    }
+                    else {
+                        timeBomb = 120;
+                    }
                     countBomb--;
                     if (countBomb == 0 && timeABomb < 0) {
                         timeABomb = 120;
@@ -139,7 +156,13 @@ public class Bomber extends Entity {
                 int yBomb = (int) (y + Sprite.SCALED_SIZE / 2);
                 if (!(BombermanGame.map.getBomb(xBom, yBomb) instanceof Bomb)) {
                     BombermanGame.map.addBomb(xBom, yBomb);
-                    timeBomb = 120;
+//                    timeBomb = timebombb;
+                    if (multibomb) {
+                        timeBomb = 40;
+                    }
+                    else {
+                        timeBomb = 120;
+                    }
                     countBomb--;
                     if (countBomb == 0 && timeABomb < 0) {
                         timeABomb = 120;
@@ -342,5 +365,9 @@ public class Bomber extends Entity {
 
     public void setFlame() {
         flame = true;
+    }
+
+    public void setMultibomb() {
+        multibomb = true;
     }
 }

@@ -5,11 +5,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Enemy.*;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Items.Bomb;
 import uet.oop.bomberman.entities.Items.Flame;
+import uet.oop.bomberman.entities.Items.MultiItem;
 import uet.oop.bomberman.entities.Items.SpeedItem;
 import uet.oop.bomberman.entities.Tiles.Brick;
 import uet.oop.bomberman.entities.Tiles.Grass;
@@ -104,6 +106,10 @@ public class Map {
                         stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
                         stillObjects.add(new Flame(j, i, Sprite.powerup_flames.getFxImage()));
 //                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+                        break;
+                    case 'm':
+                        stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
+                        stillObjects.add(new MultiItem(j, i, Sprite.powerup_bombs.getFxImage()));
                         break;
                     default:
                         stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
@@ -382,7 +388,7 @@ public class Map {
         if (level < 5) {
             level ++;
         } else {
-            level = 1;
+            BombermanGame.State = 4;
         }
         entities = new ArrayList<>();
         stillObjects = new ArrayList<>();

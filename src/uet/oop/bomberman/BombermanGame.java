@@ -152,6 +152,16 @@ public class BombermanGame extends Application {
                             replay = false;
                             State = 1;
                         }
+                        break;
+                    case 4:
+                        Game_Win();
+                        if (replay) {
+                            map.replayGame();
+                            replay = false;
+                            State = 1;
+                        }
+                        break;
+
                 }
 //                if (State == 1) {
 //
@@ -186,6 +196,15 @@ public class BombermanGame extends Application {
         gc.clearRect(0,0,Sprite.SCALED_SIZE*WIDTH,Sprite.SCALED_SIZE*HEIGHT);
 //        gc.drawImage(new Image("textures/1686792-pause_menu.jpg"),0,0);
         gc.drawImage(new Image("/textures/GameOver.jpg"), 0, 0, Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        gc.setFont(new Font("Family",25));
+        gc.fillText("nhấn R để chơi lai ", 400, 400);
+        gc.setFill(Color.GREEN);
+    }
+
+    public void Game_Win() {
+        gc.clearRect(0,0,Sprite.SCALED_SIZE*WIDTH,Sprite.SCALED_SIZE*HEIGHT);
+//        gc.drawImage(new Image("textures/1686792-pause_menu.jpg"),0,0);
+        gc.drawImage(new Image("/textures/wingame.jpg"), 0, 0, Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc.setFont(new Font("Family",25));
         gc.fillText("nhấn R để chơi lai ", 400, 400);
         gc.setFill(Color.GREEN);
