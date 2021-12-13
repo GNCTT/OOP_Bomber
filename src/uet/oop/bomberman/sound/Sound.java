@@ -18,7 +18,7 @@ public class Sound {
         MediaPlayer mediaPlayer = new MediaPlayer(media);
 
         //by setting this property to true, the audio will be played
-        //mediaPlayer.setAutoPlay(true);
+//        mediaPlayer.setAutoPlay(true);
         mediaPlayer.play();
         
     }

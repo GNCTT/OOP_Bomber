@@ -69,13 +69,10 @@ public class BombermanGame extends Application {
 
         // Tao scene
         Scene scene = new Scene(root);
-//        Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\themesound.wav");
-
-        // Them scene vao stage
         stage.setScene(scene);
         stage.show();
+        Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\nhacnenvip.wav");
 
-//        Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\soundtrack.wav");
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {

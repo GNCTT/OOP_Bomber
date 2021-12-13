@@ -7,13 +7,9 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class Minvo2 extends Enemy {
 
-    private int speed;
-    private int index;
-
 
     public Minvo2(int x, int y, Image img) {
         super(x, y, img);
-        index = 0;
         direction = 0;
         afterKill = 50;
         alive = true;

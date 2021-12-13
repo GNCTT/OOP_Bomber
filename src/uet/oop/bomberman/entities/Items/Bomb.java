@@ -16,12 +16,16 @@ public class Bomb extends Entity {
     private int animate = 0;
     private int countTime;
     private int type;
+    private boolean Allow;
+    private int timeAlow;
     private ArrayList<Entity> explodes;
     public Bomb(int x, int y, Image img) {
         super(x, y, img);
         countTime = 120;
         explodes = new ArrayList<>();
         type = 0;
+        Allow = true;
+        timeAlow = 50;
     }
 
     public Bomb(int x, int y, Image img, int type) {
@@ -29,10 +33,19 @@ public class Bomb extends Entity {
         countTime = 120;
         explodes = new ArrayList<>();
         this.type = type;
+//        Allow = true;
+//        timeAlow = 50;
     }
 
     @Override
     public void update() {
+//        if (Allow) {
+//            timeAlow--;
+//        }
+//        if (timeAlow < 0) {
+//            Allow = false;
+//            timeAlow = 100;
+//        }
         countTime --;
         if (animate < 7500) {
             animate ++;
@@ -53,6 +66,9 @@ public class Bomb extends Entity {
         if (a instanceof Enemy) {
             explode();
         }
+//        if (a instanceof Bomber && !Allow) {
+//            return true;
+//        }
         return false;
     }
 

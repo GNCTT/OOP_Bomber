@@ -58,16 +58,8 @@ public class Bomber extends Entity {
         }
         if (timeBomb < -10) {
             timeBomb = 0;
-//            countBomb = 1;
         }
         else timeBomb --;
-//        if (timeABomb < -7500) {
-//            timeABomb = 0;
-//            countBomb = 2;
-//
-//        } else {
-//            timeABomb --;
-//        }
 
         input();
         if (checkSpeed && timePower >= 0) {
@@ -111,7 +103,6 @@ public class Bomber extends Entity {
             moving = true;
 //            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\AA126_11.wav");
         }
-        System.out.println(timeFlame);
         if (multibomb) {
             timeMultibomb--;
             if (timeMultibomb < 0) {

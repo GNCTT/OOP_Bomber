@@ -80,24 +80,15 @@ public class Map {
 
     public void createMap() {
         readMap();
-//        for (int i = 0; i < height; i++) {
-//            for (int j = 0; j < width; j++) {
-//                stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
-//            }
-//        }
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; ++j) {
                 switch (_lineTiles[i].charAt(j)) {
                     case '#':
                         stillObjects.add(new Wall(j, i, Sprite.wall.getFxImage()));
                         break;
-//                    case '*':
-//                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
-//                        break;
                     case 'x':
                         stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
                         stillObjects.add(new Portal(j, i, Sprite.portal.getFxImage()));
-//                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
                     case 's':
                         stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
@@ -105,7 +96,6 @@ public class Map {
                     case 'f':
                         stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
                         stillObjects.add(new Flame(j, i, Sprite.powerup_flames.getFxImage()));
-//                        stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
                     case 'm':
                         stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
@@ -137,6 +127,10 @@ public class Map {
 //                        entities.add(new Kondoria2(j, i, Sprite.kondoria_right1.getFxImage()));
                         enemies.add(enemy);
                         break;
+                    case '5':
+                        enemy = new Oneal2(j, i, Sprite.oneal_right1.getFxImage());
+                        enemies.add(enemy);
+                        break;
                     case '6':
                         enemy = new Conma2(j, i, Sprite.conma_right1.getFxImage());
 //                        entities.add(new Conma2(j, i, Sprite.conma_right1.getFxImage()));
@@ -149,6 +143,8 @@ public class Map {
                     case '*':
                     case 's':
                     case 'x':
+                    case 'f':
+                    case 'm':
                         entities.add(new Brick(j, i, Sprite.brick.getFxImage()));
                         break;
 
