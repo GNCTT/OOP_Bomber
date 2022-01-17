@@ -11,7 +11,6 @@ import uet.oop.bomberman.entities.Items.Bomb;
 import uet.oop.bomberman.entities.Items.SpeedItem;
 import uet.oop.bomberman.entities.Tiles.Brick;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.sound.Sound;
 
 public class Bomber extends Entity {
     private int animate = 0;
@@ -113,7 +112,6 @@ public class Bomber extends Entity {
         if (flame) {
             timeFlame--;
             if (BombermanGame.space && timeBomb < 0) {
-                Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\BOM_SET.wav");
                 int xBom = (int) (x + Sprite.SCALED_SIZE / 2);
                 int yBomb = (int) (y + Sprite.SCALED_SIZE / 2);
 
@@ -142,7 +140,7 @@ public class Bomber extends Entity {
         }
         else {
             if (BombermanGame.space && timeBomb < 0) {
-                Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\BOM_SET.wav");
+//                Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\BOM_SET.wav");
                 int xBom = (int) (x + Sprite.SCALED_SIZE / 2);
                 int yBomb = (int) (y + Sprite.SCALED_SIZE / 2);
                 if (!(BombermanGame.map.getBomb(xBom, yBomb) instanceof Bomb)) {
@@ -335,7 +333,7 @@ public class Bomber extends Entity {
         if (afterKill >= 0) {
             afterKill--;
             img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, animate, 20).getFxImage();
-            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\endgame3.wav");
+//            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\endgame3.wav");
         } else {
             remove = true;
             BombermanGame.State = 3;

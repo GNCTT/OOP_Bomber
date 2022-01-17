@@ -6,7 +6,6 @@ import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Enemy.Enemy;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Items.Bomb;
-import uet.oop.bomberman.sound.Sound;
 
 public class Portal extends Entity {
 
@@ -23,7 +22,6 @@ public class Portal extends Entity {
     public boolean collide(Entity a) {
         if (a instanceof Bomber) {
             if (Bomber.score >= 10) {
-                Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\SFX\\passlevel.wav");
                 BombermanGame.map.changeLevel();
             }
             else {

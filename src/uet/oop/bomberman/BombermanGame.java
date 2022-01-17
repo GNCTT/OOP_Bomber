@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import uet.oop.bomberman.sound.Sound;
 
 import javax.sound.sampled.*;
 import java.io.File;
@@ -71,7 +70,6 @@ public class BombermanGame extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\nhacnenvip.wav");
 
         AnimationTimer timer = new AnimationTimer() {
             @Override

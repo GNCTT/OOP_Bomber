@@ -8,7 +8,6 @@ import uet.oop.bomberman.entities.Items.Explode;
 import uet.oop.bomberman.entities.Tiles.Brick;
 import uet.oop.bomberman.entities.Tiles.Grass;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.sound.Sound;
 
 import java.util.ArrayList;
 

@@ -8,7 +8,6 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Tiles.Brick;
 import uet.oop.bomberman.entities.Tiles.Grass;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.sound.Sound;
 
 import java.util.ArrayList;
 
@@ -73,7 +72,7 @@ public class Bomb extends Entity {
     }
 
     public void explode() {
-        Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\BOM_11_M.wav");
+//        Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\BOM_11_M.wav");
         int dx = (int) x / Sprite.SCALED_SIZE;
         int dy = (int) y / Sprite.SCALED_SIZE;
         remove = true;
