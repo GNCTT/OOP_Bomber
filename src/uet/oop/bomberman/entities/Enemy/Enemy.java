@@ -184,12 +184,6 @@ public abstract class Enemy extends Entity {
 
     /** Góc trái trên. */
     private int myround(double x) {
-//        int scale = (int)(x / Sprite.SCALED_SIZE);
-//        if (x > scale * Sprite.SCALED_SIZE) {
-//            return scale + 1;
-//        }
-//        else
-//            return scale;
         return (int) ((x + 2) / Sprite.SCALED_SIZE );
     }
 
@@ -216,9 +210,6 @@ public abstract class Enemy extends Entity {
         if ( a instanceof Bomber) {
             ((Bomber) a).setAlive();
         }
-//        if (a instanceof Enemy) {
-//            return true;
-//        }
         return false;
     }
 

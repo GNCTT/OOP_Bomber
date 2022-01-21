@@ -45,7 +45,6 @@ public class BombermanGame extends Application {
     public int checkAlive = 1;
     public int startnew = 0;
     public static void main(String[] args) {
-//        Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\soundtrack.wav");
         Application.launch(BombermanGame.class);
     }
 
@@ -101,31 +100,6 @@ public class BombermanGame extends Application {
                         case F : start = false; break;
                     }
                 });
-//                scene.setOnKeyTyped(event -> {
-//                    switch (event.getCode()) {
-//                        case SPACE: space = true; break;
-//                    }
-//                });
-                //de update nhan vat(toa do , hinh anh ...)
-
-//                if (checkAlive == 0) {
-//                    Game_Over();
-//                    System.out.println(replay);
-//                    if (replay) {
-//                        map.replayGame();
-//                    }
-//                }
-//                for (int i = 0; i < map.getEntities().size(); i++) {
-//                    if (map.getEntities().get(i) instanceof Bomber) {
-//                        if (((Bomber) map.getEntities().get(i)).isRemove() == false) {
-//                            checkAlive = 0;
-//                        }
-//                    }
-//                }
-//                if (State == 0 && checkAlive == 1) {
-//                    pauseGame();
-//                }
-                // ve ra man hinh
                 switch (State) {
                     case 0:
                         StartGame();

@@ -75,6 +75,8 @@ public class Bomber extends Entity {
         }
     }
 
+
+
     @Override
     public boolean collide(Entity a) {
         return false;
@@ -312,12 +314,6 @@ public class Bomber extends Entity {
     }
 
     private int myround(double x) {
-//        int scale = (int)(x / Sprite.SCALED_SIZE);
-//        if (x > scale * Sprite.SCALED_SIZE) {
-//            return scale + 1;
-//        }
-//        else
-//            return scale;
         return (int) (x / Sprite.SCALED_SIZE);
     }
 
