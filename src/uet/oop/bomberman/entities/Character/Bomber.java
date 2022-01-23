@@ -31,6 +31,8 @@ public class Bomber extends Entity {
     private boolean multibomb;
     private int timeMultibomb;
     public static int score = 0;
+    private int step;
+    private int stepAt = 0;
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
@@ -46,6 +48,7 @@ public class Bomber extends Entity {
         timeFlame = 400;
         multibomb = false;
         timeMultibomb = 800;
+        step = 32;
     }
 
     @Override
@@ -101,6 +104,14 @@ public class Bomber extends Entity {
             dx = 1* speed;
             moving = true;
 //            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\AA126_11.wav");
+        }
+        if  (BombermanGame.auto) {
+            move("EWNNNNNSSSS");
+            chooseSprite(1);
+            System.out.println(stepAt);
+        }
+        if (!BombermanGame.auto) {
+            stepAt = 0;
         }
         if (multibomb) {
             timeMultibomb--;
@@ -165,6 +176,47 @@ public class Bomber extends Entity {
 //        if (!BombermanGame.up && !BombermanGame.down && !BombermanGame.right && !BombermanGame.left) {
 //            move(0, 0);
 //        }
+    }
+
+    public void move(char s) {
+        switch (s) {
+            case 'N':
+                if (step >= 0) {
+                    move(0,speed);
+                    step -= speed;
+                }
+                break;
+            case 'E':
+                if (step >= 0) {
+                    move(speed, 0);
+                    step -= speed;
+                }
+                break;
+            case 'W':
+                if (step >= 0) {
+                    move(-speed, 0);
+                    step -= speed;
+                }
+                break;
+            default:
+                if (step >= 0) {
+                    move(0, -speed);
+                    step -= speed;
+                }
+                break;
+        }
+    }
+
+    public void move(String s) {
+        if (stepAt < s.length()) {
+            move(s.charAt(stepAt));
+            System.out.println(step);
+            if (step <= 0) {
+                stepAt += 1;
+                step = 32;
+            }
+        }
+
     }
 
     public void move(int dx, int dy) {
