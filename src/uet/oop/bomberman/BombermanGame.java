@@ -44,6 +44,7 @@ public class BombermanGame extends Application {
     public boolean start;
     public int checkAlive = 1;
     public int startnew = 0;
+    public static boolean auto = false;
     public static void main(String[] args) {
 //        Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\soundtrack.wav");
         Application.launch(BombermanGame.class);
@@ -88,6 +89,15 @@ public class BombermanGame extends Application {
                         case ENTER: State = 1;break;
                         case R: replay = true; break;
                         case F : start = true; break;
+                        case A : {
+                            if (auto) {
+                                auto = false;
+                            }
+                            else {
+                                auto = true;
+                            }
+                            break;
+                        }
                     }
                 });
                 scene.setOnKeyReleased(event -> {
@@ -158,12 +168,7 @@ public class BombermanGame extends Application {
                         break;
 
                 }
-//                if (State == 1) {
-//
-//                }
-//                 {
-//                    pauseGame();
-//                }
+
 
             }
         };
