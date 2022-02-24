@@ -5,12 +5,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import uet.oop.bomberman.AI_f.State;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Items.Bomb;
 import uet.oop.bomberman.entities.Items.SpeedItem;
 import uet.oop.bomberman.entities.Tiles.Brick;
 import uet.oop.bomberman.graphics.Sprite;
+
+import java.util.ArrayList;
+import java.util.Queue;
 
 public class Bomber extends Entity {
     private int animate = 0;
@@ -106,9 +110,8 @@ public class Bomber extends Entity {
 //            Sound.play("D:\\DEV_FILE\\OOP_Bomber\\res\\sound\\AA126_11.wav");
         }
         if  (BombermanGame.auto) {
-            move("EWNNNNNSSSS");
+            move(ai_sequence());
             chooseSprite(1);
-            System.out.println(stepAt);
         }
         if (!BombermanGame.auto) {
             stepAt = 0;
@@ -205,6 +208,19 @@ public class Bomber extends Entity {
                 }
                 break;
         }
+    }
+
+    public String ai_sequence() {
+        System.out.println(x / 32 + " " + y / 32);
+        int posX = x / 32;
+        int posY = y / 32;
+        char initName = BombermanGame.map.getChar(posX, posY);
+        State initState = new State(initName, posX, posY);
+        ArrayList<State> children = initState.getChildren();
+        System.out.println(children);
+        Queue<State> queue;
+
+        return "EEE";
     }
 
     public void move(String s) {

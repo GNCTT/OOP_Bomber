@@ -415,5 +415,9 @@ public class Map {
         return null;
     }
 
+    public char getChar(int x, int y) {
+        return _lineTiles[y].charAt(x);
+    }
+
 
 }
